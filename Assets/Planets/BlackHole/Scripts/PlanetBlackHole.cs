@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlanetBlackHole : MonoBehaviour, PlanetInterface
-{
+public class PlanetBlackHole : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 3.75f;
@@ -21,10 +20,8 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface
     [HideInInspector] public PlanetLayer Hole;
     [HideInInspector] public PlanetLayer Disk;
 
-    public bool Initialized
-    {
-        get
-        {
+    public bool Initialized {
+        get {
             return _Initialized;
         }
     }
@@ -32,8 +29,7 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface
     private bool _Initialized = false;
     private float _Timestamp = 0f;
 
-    private void Awake()
-    {
+    private void Awake() {
         _Initialized = Initialize();
 
         SetSeed();
@@ -46,8 +42,7 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface
         UpdateMaterial();
     }
 
-    public bool Initialize()
-    {
+    public bool Initialize() {
         SpriteRenderer holeRenderer = transform.Find("Hole").GetComponent<SpriteRenderer>();
         SpriteRenderer diskRenderer = transform.Find("Disk").GetComponent<SpriteRenderer>();
 
@@ -60,42 +55,35 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface
         return true;
     }
 
-    public void SetSeed()
-    {
+    public void SetSeed() {
         Disk.SetMaterialProperty(ShaderProperties.Seed, DiskSeed);
     }
 
-    public void SetPixels(float ppu)
-    {
+    public void SetPixels(float ppu) {
         Hole.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Disk.SetMaterialProperty(ShaderProperties.Pixels, ppu * 3);
     }
 
-    public void SetLight(Vector2 position)
-    {
+    public void SetLight(Vector2 position) {
         Hole.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Disk.SetMaterialProperty(ShaderProperties.LightOrigin, position);
     }
 
-    public void SetRotate(float rotation)
-    {
+    public void SetRotate(float rotation) {
         Hole.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Disk.SetMaterialProperty(ShaderProperties.Rotation, rotation);
     }
 
-    public void SetSize(float size)
-    {
+    public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
         SetPixels(Pixels * size);
     }
 
-    public void SetSpeed()
-    {
+    public void SetSpeed() {
         Disk.SetMaterialProperty(ShaderProperties.Speed, Speed);
     }
 
-    public void SetColors()
-    {
+    public void SetColors() {
         // Set the hole colors.
         Gradient gradient = new Gradient();
         GradientColorKey[] colorKey = new GradientColorKey[2];
@@ -104,8 +92,7 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface
         float[] oldTimes = { 0.50f, 1f };
         float[] newTimes = { 0f, 1f };
 
-        for (int i = 0; i < colorKey.Length; i++)
-        {
+        for (int i = 0; i < colorKey.Length; i++) {
             colorKey[i].color = HoleColor.Evaluate(oldTimes[i]);
             colorKey[i].time = newTimes[i];
 
@@ -121,30 +108,25 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface
         Disk.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(DiskColor));
     }
 
-    public void UpdateMaterial()
-    {
+    public void UpdateMaterial() {
         Hole.UpdateMaterial();
         Disk.UpdateMaterial();
     }
 
-    public void SetStartTime(float start)
-    {
+    public void SetStartTime(float start) {
         float time = 10f + start * 60f;
 
         Hole.SetMaterialProperty(ShaderProperties.Timestamp, time);
         Disk.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
-    public void UpdateTime(float time)
-    {
+    public void UpdateTime(float time) {
         Hole.SetMaterialProperty(ShaderProperties.Timestamp, time);
         Disk.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
-    private void Update()
-    {
-        if (Application.IsPlaying(gameObject))
-        {
+    private void Update() {
+        if (Application.IsPlaying(gameObject)) {
             _Timestamp += Time.deltaTime;
             UpdateTime(_Timestamp);
         }

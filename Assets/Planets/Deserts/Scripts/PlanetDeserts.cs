@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlanetDeserts : MonoBehaviour, PlanetInterface
-{
+public class PlanetDeserts : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
@@ -22,10 +21,8 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface
     [HideInInspector] public PlanetLayer Surface;
     [HideInInspector] public PlanetLayer Atmosphere;
 
-    public bool Initialized
-    {
-        get
-        {
+    public bool Initialized {
+        get {
             return _Initialized;
         }
     }
@@ -33,8 +30,7 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface
     private bool _Initialized = false;
     private float _Timestamp = 0f;
 
-    private void Awake()
-    {
+    private void Awake() {
         _Initialized = Initialize();
 
         SetSeed();
@@ -48,8 +44,7 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface
         UpdateMaterial();
     }
 
-    public bool Initialize()
-    {
+    public bool Initialize() {
         SpriteRenderer surfaceRenderer = transform.Find("Surface").GetComponent<SpriteRenderer>();
         SpriteRenderer atmosphereRenderer = transform.Find("Atmosphere").GetComponent<SpriteRenderer>();
 
@@ -62,67 +57,55 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface
         return true;
     }
 
-    public void SetSeed()
-    {
+    public void SetSeed() {
         Surface.SetMaterialProperty(ShaderProperties.Seed, SurfaceSeed);
     }
 
-    public void SetPixels(float ppu)
-    {
+    public void SetPixels(float ppu) {
         Surface.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, ppu);
     }
 
-    public void SetLight(Vector2 position)
-    {
+    public void SetLight(Vector2 position) {
         Surface.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Atmosphere.SetMaterialProperty(ShaderProperties.LightOrigin, position);
     }
 
-    public void SetRotate(float rotation)
-    {
+    public void SetRotate(float rotation) {
         Surface.SetMaterialProperty(ShaderProperties.Rotation, rotation);
     }
 
-    public void SetSize(float size)
-    {
+    public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
         SetPixels(Pixels * size);
     }
 
-    public void SetSpeed()
-    {
+    public void SetSpeed() {
         Surface.SetMaterialProperty(ShaderProperties.Speed, Speed);
     }
 
-    public void SetColors()
-    {
+    public void SetColors() {
         Surface.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(SurfaceColor));
         Atmosphere.SetMaterialProperty(ShaderProperties.Color, AtmosphereColor);
     }
 
-    public void UpdateMaterial()
-    {
+    public void UpdateMaterial() {
         Surface.UpdateMaterial();
         Atmosphere.UpdateMaterial();
     }
 
-    public void SetStartTime(float start)
-    {
+    public void SetStartTime(float start) {
         float time = 10f + start * 60f;
 
         Surface.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
-    public void UpdateTime(float time)
-    {
+    public void UpdateTime(float time) {
         Surface.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
-    private void Update()
-    {
-        if (Application.IsPlaying(gameObject))
-        {
+    private void Update() {
+        if (Application.IsPlaying(gameObject)) {
             _Timestamp += Time.deltaTime;
             UpdateTime(_Timestamp);
         }

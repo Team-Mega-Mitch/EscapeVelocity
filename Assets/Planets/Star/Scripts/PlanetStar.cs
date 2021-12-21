@@ -1,8 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlanetStar : MonoBehaviour, PlanetInterface
-{
+public class PlanetStar : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 5f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
@@ -25,10 +24,8 @@ public class PlanetStar : MonoBehaviour, PlanetInterface
     [HideInInspector] public PlanetLayer Flares;
     [HideInInspector] public PlanetLayer Emission;
 
-    public bool Initialized
-    {
-        get
-        {
+    public bool Initialized {
+        get {
             return _Initialized;
         }
     }
@@ -36,8 +33,7 @@ public class PlanetStar : MonoBehaviour, PlanetInterface
     private bool _Initialized = false;
     private float _Timestamp = 0f;
 
-    private void Awake()
-    {
+    private void Awake() {
         _Initialized = Initialize();
 
         SetSeed();
@@ -50,8 +46,7 @@ public class PlanetStar : MonoBehaviour, PlanetInterface
         UpdateMaterial();
     }
 
-    public bool Initialize()
-    {
+    public bool Initialize() {
         SpriteRenderer surfaceRenderer = transform.Find("Surface").GetComponent<SpriteRenderer>();
         SpriteRenderer flaresRenderer = transform.Find("Flares").GetComponent<SpriteRenderer>();
         SpriteRenderer emissionRenderer = transform.Find("Emission").GetComponent<SpriteRenderer>();
@@ -67,78 +62,66 @@ public class PlanetStar : MonoBehaviour, PlanetInterface
         return true;
     }
 
-    public void SetSeed()
-    {
+    public void SetSeed() {
         Surface.SetMaterialProperty(ShaderProperties.Seed, SurfaceSeed);
         Flares.SetMaterialProperty(ShaderProperties.Seed, FlaresSeed);
         Emission.SetMaterialProperty(ShaderProperties.Seed, EmmisionSeed);
     }
 
-    public void SetPixels(float ppu)
-    {
+    public void SetPixels(float ppu) {
         Surface.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Emission.SetMaterialProperty(ShaderProperties.Pixels, ppu * 2);
         Flares.SetMaterialProperty(ShaderProperties.Pixels, ppu * 2);
     }
 
-    public void SetLight(Vector2 position)
-    {
+    public void SetLight(Vector2 position) {
         return;
     }
 
-    public void SetRotate(float rotation)
-    {
+    public void SetRotate(float rotation) {
         Emission.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Flares.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Surface.SetMaterialProperty(ShaderProperties.Rotation, rotation);
     }
 
-    public void SetSize(float size)
-    {
+    public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
 
         SetPixels(Pixels * size);
     }
 
-    public void SetSpeed()
-    {
+    public void SetSpeed() {
         Surface.SetMaterialProperty(ShaderProperties.Speed, Speed);
         Flares.SetMaterialProperty(ShaderProperties.Speed, Speed * 0.5f);
         Emission.SetMaterialProperty(ShaderProperties.Speed, Speed);
     }
 
-    public void SetColors()
-    {
+    public void SetColors() {
         Surface.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(SurfaceColor));
         Flares.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(FlaresColor));
         Emission.SetMaterialProperty(ShaderProperties.Color, EmmisionColor);
     }
 
-    public void UpdateMaterial()
-    {
+    public void UpdateMaterial() {
         Surface.UpdateMaterial();
         Flares.UpdateMaterial();
         Emission.UpdateMaterial();
     }
 
-    public void SetStartTime(float start)
-    {
+    public void SetStartTime(float start) {
         Surface.SetMaterialProperty(ShaderProperties.Timestamp, start);
         Flares.SetMaterialProperty(ShaderProperties.Timestamp, start);
         Emission.SetMaterialProperty(ShaderProperties.Timestamp, start);
     }
 
-    public void UpdateTime(float time)
-    {
+    public void UpdateTime(float time) {
         Surface.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.1f);
         Flares.SetMaterialProperty(ShaderProperties.Timestamp, time);
         Emission.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
-    private void Update()
-    {
-        if (Application.IsPlaying(gameObject))
-        {
+    private void Update() {
+        if (Application.IsPlaying(gameObject)) {
             _Timestamp += Time.deltaTime;
             UpdateTime(_Timestamp);
         }

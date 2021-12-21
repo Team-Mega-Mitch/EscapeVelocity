@@ -2,8 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [ExecuteInEditMode]
-public class PlanetIcelands : MonoBehaviour, PlanetInterface
-{
+public class PlanetIcelands : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
@@ -32,10 +31,8 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
     [HideInInspector] public PlanetLayer Clouds;
     [HideInInspector] public PlanetLayer Atmosphere;
 
-    public bool Initialized
-    {
-        get
-        {
+    public bool Initialized {
+        get {
             return _Initialized;
         }
     }
@@ -43,8 +40,7 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
     private bool _Initialized = false;
     private float _Timestamp = 0f;
 
-    private void Awake()
-    {
+    private void Awake() {
         _Initialized = Initialize();
 
         SetSeed();
@@ -58,8 +54,7 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
         UpdateMaterial();
     }
 
-    public bool Initialize()
-    {
+    public bool Initialize() {
         SpriteRenderer landRenderer = transform.Find("Land").GetComponent<SpriteRenderer>();
         SpriteRenderer waterRenderer = transform.Find("Water").GetComponent<SpriteRenderer>();
         SpriteRenderer cloudsRenderer = transform.Find("Clouds").GetComponent<SpriteRenderer>();
@@ -78,8 +73,7 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
         return true;
     }
 
-    public void SetSeed()
-    {
+    public void SetSeed() {
         Land.SetMaterialProperty(ShaderProperties.Seed, LandSeed);
         Water.SetMaterialProperty(ShaderProperties.Seed, WaterSeed);
         Clouds.SetMaterialProperty(ShaderProperties.Seed, CloudsSeed);
@@ -88,45 +82,39 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
         Clouds.SetMaterialProperty(ShaderProperties.CloudCover, CloudCover);
     }
 
-    public void SetPixels(float ppu)
-    {
+    public void SetPixels(float ppu) {
         Land.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Water.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Clouds.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, ppu);
     }
 
-    public void SetLight(Vector2 position)
-    {
+    public void SetLight(Vector2 position) {
         Land.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Water.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Clouds.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Atmosphere.SetMaterialProperty(ShaderProperties.LightOrigin, position);
     }
 
-    public void SetRotate(float rotation)
-    {
+    public void SetRotate(float rotation) {
         Land.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Water.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Clouds.SetMaterialProperty(ShaderProperties.Rotation, rotation);
     }
 
-    public void SetSize(float size)
-    {
+    public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
 
         SetPixels(Pixels * size);
     }
 
-    public void SetSpeed()
-    {
+    public void SetSpeed() {
         Land.SetMaterialProperty(ShaderProperties.Speed, PlanetSpeed);
         Water.SetMaterialProperty(ShaderProperties.Speed, PlanetSpeed);
         Clouds.SetMaterialProperty(ShaderProperties.Speed, CloudSpeed);
     }
 
-    public void SetColors()
-    {
+    public void SetColors() {
         Dictionary<string, float> colors;
 
         // Set Land colors.
@@ -136,8 +124,7 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color3, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Land.SetMaterialProperty(element.Key, LandColor.Evaluate(element.Value));
         }
 
@@ -148,8 +135,7 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color3, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Water.SetMaterialProperty(element.Key, WaterColor.Evaluate(element.Value));
         }
 
@@ -161,8 +147,7 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color4, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Clouds.SetMaterialProperty(element.Key, CloudsColor.Evaluate(element.Value));
         }
 
@@ -170,16 +155,14 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
         Atmosphere.SetMaterialProperty(ShaderProperties.Color, AtmosphereColor);
     }
 
-    public void UpdateMaterial()
-    {
+    public void UpdateMaterial() {
         Land.UpdateMaterial();
         Water.UpdateMaterial();
         Clouds.UpdateMaterial();
         Atmosphere.UpdateMaterial();
     }
 
-    public void SetStartTime(float start)
-    {
+    public void SetStartTime(float start) {
         float time = 10f + start * 60f;
 
         Land.SetMaterialProperty(ShaderProperties.Timestamp, time);
@@ -187,17 +170,14 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface
         Clouds.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
     }
 
-    public void UpdateTime(float time)
-    {
+    public void UpdateTime(float time) {
         Land.SetMaterialProperty(ShaderProperties.Timestamp, time);
         Water.SetMaterialProperty(ShaderProperties.Timestamp, time);
         Clouds.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
     }
 
-    private void Update()
-    {
-        if (Application.IsPlaying(gameObject))
-        {
+    private void Update() {
+        if (Application.IsPlaying(gameObject)) {
             _Timestamp += Time.deltaTime;
             UpdateTime(_Timestamp);
         }

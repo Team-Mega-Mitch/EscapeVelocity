@@ -1,15 +1,12 @@
 using UnityEditor;
 
 [CustomEditor(typeof(PlanetIcelands))]
-public class PlanetIcelandsEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
+public class PlanetIcelandsEditor : Editor {
+    public override void OnInspectorGUI() {
         base.OnInspectorGUI();
         PlanetIcelands planet = (PlanetIcelands)target;
 
-        if (planet.Initialized)
-        {
+        if (planet.Initialized) {
             PlanetLayer[] layers = {
                 planet.Land,
                 planet.Water,
@@ -17,8 +14,7 @@ public class PlanetIcelandsEditor : Editor
                 planet.Atmosphere
             };
 
-            if (System.Array.Exists(layers, element => element == null))
-            {
+            if (System.Array.Exists(layers, element => element == null)) {
                 planet.Initialize();
             }
 

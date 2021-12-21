@@ -2,8 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [ExecuteInEditMode]
-public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
-{
+public class PlanetVolcanoes : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
@@ -31,10 +30,8 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
     [HideInInspector] public PlanetLayer Lava;
     [HideInInspector] public PlanetLayer Atmosphere;
 
-    public bool Initialized
-    {
-        get
-        {
+    public bool Initialized {
+        get {
             return _Initialized;
         }
     }
@@ -42,8 +39,7 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
     private bool _Initialized = false;
     private float _Timestamp = 0f;
 
-    private void Awake()
-    {
+    private void Awake() {
         _Initialized = Initialize();
 
         SetSeed();
@@ -58,8 +54,7 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
         UpdateMaterial();
     }
 
-    public bool Initialize()
-    {
+    public bool Initialize() {
         SpriteRenderer landRenderer = transform.Find("Land").GetComponent<SpriteRenderer>();
         SpriteRenderer cratersRenderer = transform.Find("Craters").GetComponent<SpriteRenderer>();
         SpriteRenderer lavaRenderer = transform.Find("Lava").GetComponent<SpriteRenderer>();
@@ -78,8 +73,7 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
         return true;
     }
 
-    public void SetSeed()
-    {
+    public void SetSeed() {
         Land.SetMaterialProperty(ShaderProperties.Seed, LandSeed);
         Craters.SetMaterialProperty(ShaderProperties.Seed, CratersSeed);
         Lava.SetMaterialProperty(ShaderProperties.Seed, LavaSeed);
@@ -87,45 +81,39 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
         Lava.SetMaterialProperty(ShaderProperties.FlowRate, LavaFlow);
     }
 
-    public void SetPixels(float ppu)
-    {
+    public void SetPixels(float ppu) {
         Land.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Craters.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Lava.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, ppu);
     }
 
-    public void SetLight(Vector2 position)
-    {
+    public void SetLight(Vector2 position) {
         Land.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Craters.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Lava.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Atmosphere.SetMaterialProperty(ShaderProperties.LightOrigin, position);
     }
 
-    public void SetRotate(float rotation)
-    {
+    public void SetRotate(float rotation) {
         Land.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Craters.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Lava.SetMaterialProperty(ShaderProperties.Rotation, rotation);
     }
 
-    public void SetSize(float size)
-    {
+    public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
 
         SetPixels(Pixels * size);
     }
 
-    public void SetSpeed()
-    {
+    public void SetSpeed() {
         Land.SetMaterialProperty(ShaderProperties.Speed, Speed);
         Craters.SetMaterialProperty(ShaderProperties.Speed, Speed);
         Lava.SetMaterialProperty(ShaderProperties.Speed, Speed);
     }
 
-    public void SetColors()
-    {
+    public void SetColors() {
         Dictionary<string, float> colors;
 
         // Set land colors.
@@ -135,8 +123,7 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color3, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Land.SetMaterialProperty(element.Key, LandColor.Evaluate(element.Value));
         }
 
@@ -146,8 +133,7 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color2, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Craters.SetMaterialProperty(element.Key, CratersColor.Evaluate(element.Value));
         }
 
@@ -158,8 +144,7 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color3, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Lava.SetMaterialProperty(element.Key, LavaColor.Evaluate(element.Value));
         }
 
@@ -167,21 +152,18 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
         Atmosphere.SetMaterialProperty(ShaderProperties.Color, AtmosphereColor);
     }
 
-    public void EnableCraters(bool enabled)
-    {
+    public void EnableCraters(bool enabled) {
         Craters.SetEnabled(enabled);
     }
 
-    public void UpdateMaterial()
-    {
+    public void UpdateMaterial() {
         Land.UpdateMaterial();
         Craters.UpdateMaterial();
         Lava.UpdateMaterial();
         Atmosphere.UpdateMaterial();
     }
 
-    public void SetStartTime(float start)
-    {
+    public void SetStartTime(float start) {
         float time = 10f + start * 60f;
 
         Land.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
@@ -189,17 +171,14 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface
         Lava.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
     }
 
-    public void UpdateTime(float time)
-    {
+    public void UpdateTime(float time) {
         Land.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
         Craters.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
         Lava.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
     }
 
-    private void Update()
-    {
-        if (Application.IsPlaying(gameObject))
-        {
+    private void Update() {
+        if (Application.IsPlaying(gameObject)) {
             _Timestamp += Time.deltaTime;
             UpdateTime(_Timestamp);
         }

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-public interface PlanetInterface
-{
+public interface PlanetInterface {
     void SetSeed();
     void SetPixels(float ppu);
     void SetLight(Vector2 position);

@@ -2,8 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [ExecuteInEditMode]
-public class PlanetContinents : MonoBehaviour, PlanetInterface
-{
+public class PlanetContinents : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
@@ -32,10 +31,8 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
     [HideInInspector] public PlanetLayer Clouds;
     [HideInInspector] public PlanetLayer Atmosphere;
 
-    public bool Initialized
-    {
-        get
-        {
+    public bool Initialized {
+        get {
             return _Initialized;
         }
     }
@@ -43,8 +40,7 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
     private bool _Initialized = false;
     private float _Timestamp = 0f;
 
-    private void Awake()
-    {
+    private void Awake() {
         _Initialized = Initialize();
 
         SetSeed();
@@ -58,8 +54,7 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
         UpdateMaterial();
     }
 
-    public bool Initialize()
-    {
+    public bool Initialize() {
         SpriteRenderer landRenderer = transform.Find("Land").GetComponent<SpriteRenderer>();
         SpriteRenderer waterRenderer = transform.Find("Water").GetComponent<SpriteRenderer>();
         SpriteRenderer cloudsRenderer = transform.Find("Clouds").GetComponent<SpriteRenderer>();
@@ -78,8 +73,7 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
         return true;
     }
 
-    public void SetSeed()
-    {
+    public void SetSeed() {
         Water.SetMaterialProperty(ShaderProperties.Seed, WaterSeed);
         Land.SetMaterialProperty(ShaderProperties.Seed, LandSeed);
         Clouds.SetMaterialProperty(ShaderProperties.Seed, CloudsSeed);
@@ -88,45 +82,39 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
         Clouds.SetMaterialProperty(ShaderProperties.CloudCover, CloudCover);
     }
 
-    public void SetPixels(float ppu)
-    {
+    public void SetPixels(float ppu) {
         Water.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Land.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Clouds.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, ppu);
     }
 
-    public void SetLight(Vector2 position)
-    {
+    public void SetLight(Vector2 position) {
         Water.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Land.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Clouds.SetMaterialProperty(ShaderProperties.LightOrigin, position);
         Atmosphere.SetMaterialProperty(ShaderProperties.LightOrigin, position);
     }
 
-    public void SetRotate(float rotation)
-    {
+    public void SetRotate(float rotation) {
         Water.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Land.SetMaterialProperty(ShaderProperties.Rotation, rotation);
         Clouds.SetMaterialProperty(ShaderProperties.Rotation, rotation);
     }
 
-    public void SetSize(float size)
-    {
+    public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
 
         SetPixels(Pixels * size);
     }
 
-    public void SetSpeed()
-    {
+    public void SetSpeed() {
         Clouds.SetMaterialProperty(ShaderProperties.Speed, CloudSpeed);
         Water.SetMaterialProperty(ShaderProperties.Speed, PlanetSpeed);
         Land.SetMaterialProperty(ShaderProperties.Speed, PlanetSpeed);
     }
 
-    public void SetColors()
-    {
+    public void SetColors() {
         Dictionary<string, float> colors;
 
         // Set land colors.
@@ -137,8 +125,7 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color4, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Land.SetMaterialProperty(element.Key, LandColor.Evaluate(element.Value));
         }
 
@@ -149,8 +136,7 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color3, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Water.SetMaterialProperty(element.Key, WaterColor.Evaluate(element.Value));
         }
 
@@ -162,8 +148,7 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
             { ShaderProperties.Color4, 1f  }
         };
 
-        foreach (KeyValuePair<string, float> element in colors)
-        {
+        foreach (KeyValuePair<string, float> element in colors) {
             Clouds.SetMaterialProperty(element.Key, CloudsColor.Evaluate(element.Value));
         }
 
@@ -171,21 +156,18 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
         Atmosphere.SetMaterialProperty(ShaderProperties.Color, AtmosphereColor);
     }
 
-    public void UpdateMaterial()
-    {
+    public void UpdateMaterial() {
         Land.UpdateMaterial();
         Water.UpdateMaterial();
         Clouds.UpdateMaterial();
         Atmosphere.UpdateMaterial();
     }
 
-    public void UpdateMaterial(SpriteRenderer renderer, Material material)
-    {
+    public void UpdateMaterial(SpriteRenderer renderer, Material material) {
         renderer.sharedMaterial = material;
     }
 
-    public void SetStartTime(float start)
-    {
+    public void SetStartTime(float start) {
         float time = 10f + start * 60f;
 
         Clouds.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
@@ -193,17 +175,14 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface
         Land.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
-    public void UpdateTime(float time)
-    {
+    public void UpdateTime(float time) {
         Clouds.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
         Water.SetMaterialProperty(ShaderProperties.Timestamp, time);
         Land.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
-    private void Update()
-    {
-        if (Application.IsPlaying(gameObject))
-        {
+    private void Update() {
+        if (Application.IsPlaying(gameObject)) {
             _Timestamp += Time.deltaTime;
             UpdateTime(_Timestamp);
         }

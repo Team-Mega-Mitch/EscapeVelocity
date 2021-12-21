@@ -1,5 +1,4 @@
-public struct ShaderProperties
-{
+public struct ShaderProperties {
     public const string Pixels = "_Pixels";
     public const string LightOrigin = "_LightOrigin";
     public const string Seed = "_Seed";

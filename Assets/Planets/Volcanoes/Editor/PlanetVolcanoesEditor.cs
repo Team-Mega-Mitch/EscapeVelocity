@@ -1,15 +1,12 @@
 using UnityEditor;
 
 [CustomEditor(typeof(PlanetVolcanoes))]
-public class PlanetVolcanoesEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
+public class PlanetVolcanoesEditor : Editor {
+    public override void OnInspectorGUI() {
         base.OnInspectorGUI();
         PlanetVolcanoes planet = (PlanetVolcanoes)target;
 
-        if (planet.Initialized)
-        {
+        if (planet.Initialized) {
             PlanetLayer[] layers = {
                 planet.Land,
                 planet.Craters,
@@ -17,8 +14,7 @@ public class PlanetVolcanoesEditor : Editor
                 planet.Atmosphere
             };
 
-            if (System.Array.Exists(layers, element => element == null))
-            {
+            if (System.Array.Exists(layers, element => element == null)) {
                 planet.Initialize();
             }
 

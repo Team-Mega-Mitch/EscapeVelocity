@@ -1,23 +1,19 @@
 using UnityEditor;
 
 [CustomEditor(typeof(PlanetStar))]
-public class PlanetStarEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
+public class PlanetStarEditor : Editor {
+    public override void OnInspectorGUI() {
         base.OnInspectorGUI();
         PlanetStar planet = (PlanetStar)target;
 
-        if (planet.Initialized)
-        {
+        if (planet.Initialized) {
             PlanetLayer[] layers = {
                 planet.Surface,
                 planet.Flares,
                 planet.Emission
             };
 
-            if (System.Array.Exists(layers, element => element == null))
-            {
+            if (System.Array.Exists(layers, element => element == null)) {
                 planet.Initialize();
             }
 
