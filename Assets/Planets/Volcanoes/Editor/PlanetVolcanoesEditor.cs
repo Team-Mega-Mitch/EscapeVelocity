@@ -25,8 +25,6 @@ public class PlanetVolcanoesEditor : Editor {
             planet.SetLight(planet.LightOrigin);
             planet.SetSpeed();
             planet.EnableCraters(planet.CratersEnabled);
-
-            planet.UpdateMaterial();
         }
     }
 }

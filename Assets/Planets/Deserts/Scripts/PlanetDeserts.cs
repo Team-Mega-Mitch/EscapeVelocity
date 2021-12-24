@@ -40,8 +40,6 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface {
         SetRotate(Rotation);
         SetLight(LightOrigin);
         SetSpeed();
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -87,11 +85,6 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface {
     public void SetColors() {
         Surface.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(SurfaceColor));
         Atmosphere.SetMaterialProperty(ShaderProperties.Color, AtmosphereColor);
-    }
-
-    public void UpdateMaterial() {
-        Surface.UpdateMaterial();
-        Atmosphere.UpdateMaterial();
     }
 
     public void SetStartTime(float start) {

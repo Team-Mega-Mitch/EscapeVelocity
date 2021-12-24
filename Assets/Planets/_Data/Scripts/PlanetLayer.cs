@@ -21,6 +21,8 @@ public class PlanetLayer {
         } else {
             _Material.SetInt(key, value);
         }
+
+        UpdateMaterial();
     }
 
     public void SetMaterialProperty(string key, float value) {
@@ -29,6 +31,8 @@ public class PlanetLayer {
         } else {
             _Material.SetFloat(key, value);
         }
+
+        UpdateMaterial();
     }
 
     public void SetMaterialProperty(string key, Vector2 value) {
@@ -37,6 +41,8 @@ public class PlanetLayer {
         } else {
             _Material.SetVector(key, value);
         }
+
+        UpdateMaterial();
     }
 
     public void SetMaterialProperty(string key, Color value) {
@@ -45,6 +51,8 @@ public class PlanetLayer {
         } else {
             _Material.SetColor(key, value);
         }
+
+        UpdateMaterial();
     }
 
     public void SetMaterialProperty(string key, Texture2D value) {
@@ -53,9 +61,11 @@ public class PlanetLayer {
         } else {
             _Material.SetTexture(key, value);
         }
+
+        UpdateMaterial();
     }
 
-    public void UpdateMaterial() {
+    private void UpdateMaterial() {
         if (!isPrefab()) {
             _Renderer.material = _Material;
         }

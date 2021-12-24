@@ -5,6 +5,6 @@ public class Spawner : MonoBehaviour {
 
     private void Start() {
         int index = Random.Range(0, Planets.Length - 1);
-        Instantiate(Planets[index], new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject planet = Instantiate(Planets[index], new Vector3(0, 0, 0), Quaternion.identity);
     }
 }

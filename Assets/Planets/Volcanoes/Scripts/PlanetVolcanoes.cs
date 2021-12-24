@@ -50,8 +50,6 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface {
         SetLight(LightOrigin);
         SetSpeed();
         EnableCraters(CratersEnabled);
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -154,13 +152,6 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface {
 
     public void EnableCraters(bool enabled) {
         Craters.SetEnabled(enabled);
-    }
-
-    public void UpdateMaterial() {
-        Land.UpdateMaterial();
-        Craters.UpdateMaterial();
-        Lava.UpdateMaterial();
-        Atmosphere.UpdateMaterial();
     }
 
     public void SetStartTime(float start) {

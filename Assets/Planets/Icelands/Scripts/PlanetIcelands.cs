@@ -50,8 +50,6 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface {
         SetRotate(Rotation);
         SetLight(LightOrigin);
         SetSpeed();
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -153,13 +151,6 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface {
 
         // Set atmosphere colors.
         Atmosphere.SetMaterialProperty(ShaderProperties.Color, AtmosphereColor);
-    }
-
-    public void UpdateMaterial() {
-        Land.UpdateMaterial();
-        Water.UpdateMaterial();
-        Clouds.UpdateMaterial();
-        Atmosphere.UpdateMaterial();
     }
 
     public void SetStartTime(float start) {

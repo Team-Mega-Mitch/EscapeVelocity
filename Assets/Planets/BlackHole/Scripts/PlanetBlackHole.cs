@@ -38,8 +38,6 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface {
         SetSize(Size);
         SetRotate(Rotation);
         SetSpeed();
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -106,11 +104,6 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface {
 
         // Set the disk colors.
         Disk.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(DiskColor));
-    }
-
-    public void UpdateMaterial() {
-        Hole.UpdateMaterial();
-        Disk.UpdateMaterial();
     }
 
     public void SetStartTime(float start) {

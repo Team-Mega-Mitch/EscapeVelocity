@@ -47,8 +47,6 @@ public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
         SetRotate(Rotation);
         SetLight(LightOrigin);
         SetSpeed();
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -143,12 +141,6 @@ public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
         foreach (KeyValuePair<string, float> element in colors) {
             Clouds2.SetMaterialProperty(element.Key, Clouds2Color.Evaluate(element.Value));
         }
-    }
-
-    public void UpdateMaterial() {
-        Surface.UpdateMaterial();
-        Clouds1.UpdateMaterial();
-        Clouds2.UpdateMaterial();
     }
 
     public void SetStartTime(float start) {

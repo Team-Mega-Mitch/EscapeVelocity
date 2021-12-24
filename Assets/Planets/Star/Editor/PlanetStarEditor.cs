@@ -22,8 +22,6 @@ public class PlanetStarEditor : Editor {
             planet.SetSize(planet.Size);
             planet.SetRotate(planet.Rotation);
             planet.SetSpeed();
-
-            planet.UpdateMaterial();
         }
     }
 }

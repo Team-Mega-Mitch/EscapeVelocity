@@ -42,8 +42,6 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
         SetSize(Size);
         SetRotate(Rotation);
         SetSpeed();
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -100,12 +98,6 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
         Surface.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(SurfaceColor));
         Flares.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(FlaresColor));
         Emission.SetMaterialProperty(ShaderProperties.Color, EmmisionColor);
-    }
-
-    public void UpdateMaterial() {
-        Surface.UpdateMaterial();
-        Flares.UpdateMaterial();
-        Emission.UpdateMaterial();
     }
 
     public void SetStartTime(float start) {

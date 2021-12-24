@@ -50,8 +50,6 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface {
         SetRotate(Rotation);
         SetLight(LightOrigin);
         SetSpeed();
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -154,13 +152,6 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface {
 
         // Set atmostphere color.
         Atmosphere.SetMaterialProperty(ShaderProperties.Color, AtmosphereColor);
-    }
-
-    public void UpdateMaterial() {
-        Land.UpdateMaterial();
-        Water.UpdateMaterial();
-        Clouds.UpdateMaterial();
-        Atmosphere.UpdateMaterial();
     }
 
     public void UpdateMaterial(SpriteRenderer renderer, Material material) {

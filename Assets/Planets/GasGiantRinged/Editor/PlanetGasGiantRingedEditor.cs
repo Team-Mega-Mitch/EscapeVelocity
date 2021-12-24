@@ -23,8 +23,6 @@ public class PlanetGasGiantRingedEditor : Editor {
             planet.SetLight(planet.LightOrigin);
             planet.SetSpeed();
             planet.EnableRing(planet.RingEnabled);
-
-            planet.UpdateMaterial();
         }
     }
 }

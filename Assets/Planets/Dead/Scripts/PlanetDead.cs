@@ -42,8 +42,6 @@ public class PlanetDead : MonoBehaviour, PlanetInterface {
         SetRotate(Rotation);
         SetLight(LightOrigin);
         SetSpeed();
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -113,11 +111,6 @@ public class PlanetDead : MonoBehaviour, PlanetInterface {
         foreach (KeyValuePair<string, float> element in colors) {
             Craters.SetMaterialProperty(element.Key, CraterColor.Evaluate(element.Value));
         }
-    }
-
-    public void UpdateMaterial() {
-        Surface.UpdateMaterial();
-        Craters.UpdateMaterial();
     }
 
     public void UpdateMaterial(SpriteRenderer renderer, Material material) {

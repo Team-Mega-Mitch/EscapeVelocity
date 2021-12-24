@@ -45,8 +45,6 @@ public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
         SetLight(LightOrigin);
         SetSpeed();
         EnableRing(RingEnabled);
-
-        UpdateMaterial();
     }
 
     public bool Initialize() {
@@ -157,11 +155,6 @@ public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
 
     public void EnableRing(bool enabled) {
         Ring.SetEnabled(enabled);
-    }
-
-    public void UpdateMaterial() {
-        Planet.UpdateMaterial();
-        Ring.UpdateMaterial();
     }
 
     public void SetStartTime(float start) {

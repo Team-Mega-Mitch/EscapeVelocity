@@ -8,7 +8,6 @@ public interface PlanetInterface {
     void SetSize(float size);
     void SetSpeed();
     void SetColors();
-    void UpdateMaterial();
     void SetStartTime(float time);
     void UpdateTime(float time);
 }

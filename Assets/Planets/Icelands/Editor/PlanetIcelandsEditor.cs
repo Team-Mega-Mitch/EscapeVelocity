@@ -24,8 +24,6 @@ public class PlanetIcelandsEditor : Editor {
             planet.SetRotate(planet.Rotation);
             planet.SetLight(planet.LightOrigin);
             planet.SetSpeed();
-
-            planet.UpdateMaterial();
         }
     }
 }
