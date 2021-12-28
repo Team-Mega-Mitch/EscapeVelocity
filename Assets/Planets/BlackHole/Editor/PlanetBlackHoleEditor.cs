@@ -2,26 +2,21 @@ using UnityEditor;
 
 [CustomEditor(typeof(PlanetBlackHole))]
 public class PlanetBlackHoleEditor : Editor {
+    private PlanetBlackHole Planet;
+
+    protected virtual void OnEnable() {
+        Planet = (PlanetBlackHole)target;
+        Planet.Initialize();
+    }
+
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
-        PlanetBlackHole planet = (PlanetBlackHole)target;
 
-        if (planet.Initialized) {
-            PlanetLayer[] layers = {
-                planet.Hole,
-                planet.Disk
-            };
-
-            if (System.Array.Exists(layers, element => element == null)) {
-                planet.Initialize();
-            }
-
-            planet.SetSeed();
-            planet.SetColors();
-            planet.SetPixels(planet.Pixels);
-            planet.SetSize(planet.Size);
-            planet.SetRotate(planet.Rotation);
-            planet.SetSpeed();
-        }
+        Planet.SetSeed();
+        Planet.SetColors();
+        Planet.SetPixels(Planet.Pixels);
+        Planet.SetSize(Planet.Size);
+        Planet.SetRotate(Planet.Rotation);
+        Planet.SetSpeed();
     }
 }
