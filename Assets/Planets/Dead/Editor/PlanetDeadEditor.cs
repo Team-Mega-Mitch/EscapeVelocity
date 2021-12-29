@@ -12,11 +12,12 @@ public class PlanetDeadEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        Planet.SetSeed();
-        Planet.SetColors();
+        Planet.SetSeed(Planet.SurfaceSeed, Planet.CraterSeed);
+        Planet.SetColors(Planet.SurfaceColor, Planet.CraterColor);
+        Planet.SetPixels(Planet.Pixels);
         Planet.SetSize(Planet.Size);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetLight(Planet.LightOrigin);
-        Planet.SetSpeed();
+        Planet.SetSpeed(Planet.Speed);
     }
 }

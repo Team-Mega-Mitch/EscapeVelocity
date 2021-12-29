@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlanetBlackHole : MonoBehaviour, PlanetInterface {
+public class PlanetBlackHole : MonoBehaviour {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 3.75f;
@@ -17,71 +17,73 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface {
     [Header("Misc")]
     [Range(0, 256)] public int Pixels = 128;
 
-    [HideInInspector] public PlanetLayer Hole;
-    [HideInInspector] public PlanetLayer Disk;
+    private int _DefaultPixels;
+    private PlanetLayer _Hole;
+    private PlanetLayer _Disk;
 
-    public bool Initialized {
-        get {
-            return _Initialized;
-        }
-    }
-
-    private bool _Initialized = false;
     private float _Timestamp = 0f;
 
     private void Awake() {
-        _Initialized = Initialize();
+        Initialize();
 
-        SetSeed();
-        SetColors();
+        SetSeed(DiskSeed);
+        SetColors(HoleColor, DiskColor);
         SetPixels(Pixels);
         SetSize(Size);
         SetRotate(Rotation);
-        SetSpeed();
+        SetSpeed(Speed);
     }
 
-    public bool Initialize() {
+    public void Initialize() {
         SpriteRenderer holeRenderer = transform.Find("Hole").GetComponent<SpriteRenderer>();
         SpriteRenderer diskRenderer = transform.Find("Disk").GetComponent<SpriteRenderer>();
 
         Material holeMaterial = new Material(holeRenderer.sharedMaterial);
         Material diskMaterial = new Material(diskRenderer.sharedMaterial);
 
-        Hole = new PlanetLayer(gameObject, holeRenderer, holeMaterial);
-        Disk = new PlanetLayer(gameObject, diskRenderer, diskMaterial);
+        _Hole = new PlanetLayer(gameObject, holeRenderer, holeMaterial);
+        _Disk = new PlanetLayer(gameObject, diskRenderer, diskMaterial);
 
-        return true;
+        _DefaultPixels = Pixels;
     }
 
-    public void SetSeed() {
-        Disk.SetMaterialProperty(ShaderProperties.Seed, DiskSeed);
+    public void SetSeed(int seed) {
+        _Disk.SetMaterialProperty(ShaderProperties.Seed, DiskSeed);
+
+        DiskSeed = seed;
     }
 
     public void SetPixels(float ppu) {
-        Hole.SetMaterialProperty(ShaderProperties.Pixels, ppu);
-        Disk.SetMaterialProperty(ShaderProperties.Pixels, ppu * 3);
-    }
+        _Hole.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Disk.SetMaterialProperty(ShaderProperties.Pixels, ppu * 3);
 
-    public void SetLight(Vector2 position) {
-        Hole.SetMaterialProperty(ShaderProperties.LightOrigin, position);
-        Disk.SetMaterialProperty(ShaderProperties.LightOrigin, position);
+        Pixels = (int)ppu;
     }
 
     public void SetRotate(float rotation) {
-        Hole.SetMaterialProperty(ShaderProperties.Rotation, rotation);
-        Disk.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+        _Hole.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+        _Disk.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+
+        Rotation = rotation;
     }
 
     public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
-        SetPixels(Pixels * size);
+
+        // Scale for pixel size, without tampering "pixels" property
+        _Hole.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+        _Disk.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels * 3);
+
+        Size = size;
     }
 
-    public void SetSpeed() {
-        Disk.SetMaterialProperty(ShaderProperties.Speed, Speed);
+    public void SetSpeed(float speed) {
+        _Disk.SetMaterialProperty(ShaderProperties.Speed, Speed);
+
+        Speed = speed;
     }
 
-    public void SetColors() {
+    public void SetColors(Gradient holeColors, Gradient diskColors) {
         // Set the hole colors.
         Gradient gradient = new Gradient();
         GradientColorKey[] colorKey = new GradientColorKey[2];
@@ -99,23 +101,19 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface {
         }
         gradient.SetKeys(colorKey, alphaKey);
 
-        Hole.SetMaterialProperty(ShaderProperties.Color, HoleColor.Evaluate(0));
-        Hole.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(gradient));
+        _Hole.SetMaterialProperty(ShaderProperties.Color, holeColors.Evaluate(0));
+        _Hole.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(gradient));
 
         // Set the disk colors.
-        Disk.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(DiskColor));
-    }
+        _Disk.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(diskColors));
 
-    public void SetStartTime(float start) {
-        float time = 10f + start * 60f;
-
-        Hole.SetMaterialProperty(ShaderProperties.Timestamp, time);
-        Disk.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        HoleColor = holeColors;
+        DiskColor = diskColors;
     }
 
     public void UpdateTime(float time) {
-        Hole.SetMaterialProperty(ShaderProperties.Timestamp, time);
-        Disk.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        _Hole.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        _Disk.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
     private void Update() {

@@ -12,10 +12,11 @@ public class PlanetStarEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        Planet.SetSeed();
-        Planet.SetColors();
+        Planet.SetSeed(Planet.SurfaceSeed, Planet.FlaresSeed, Planet.EmissionSeed);
+        Planet.SetColors(Planet.SurfaceColor, Planet.FlaresColor, Planet.EmissionColor);
+        Planet.SetPixels(Planet.Pixels);
         Planet.SetSize(Planet.Size);
         Planet.SetRotate(Planet.Rotation);
-        Planet.SetSpeed();
+        Planet.SetSpeed(Planet.Speed);
     }
 }

@@ -12,12 +12,13 @@ public class PlanetGasGiantRingedEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        Planet.SetSeed();
-        Planet.SetColors();
+        Planet.SetSeed(Planet.PlanetSeed, Planet.RingSeed);
+        Planet.SetColors(Planet.PlanetColor, Planet.RingColor);
+        Planet.SetPixels(Planet.Pixels);
         Planet.SetSize(Planet.Size);
-        Planet.SetRotate();
+        Planet.SetRotate(Planet.PlanetRotation, Planet.RingRotation);
         Planet.SetLight(Planet.LightOrigin);
-        Planet.SetSpeed();
+        Planet.SetSpeed(Planet.PlanetSpeed, Planet.RingSpeed);
         Planet.EnableRing(Planet.RingEnabled);
     }
 }

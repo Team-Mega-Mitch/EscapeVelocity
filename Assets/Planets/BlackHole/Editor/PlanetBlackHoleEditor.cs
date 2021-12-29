@@ -12,11 +12,11 @@ public class PlanetBlackHoleEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        Planet.SetSeed();
-        Planet.SetColors();
+        Planet.SetSeed(Planet.DiskSeed);
+        Planet.SetColors(Planet.HoleColor, Planet.DiskColor);
         Planet.SetPixels(Planet.Pixels);
         Planet.SetSize(Planet.Size);
         Planet.SetRotate(Planet.Rotation);
-        Planet.SetSpeed();
+        Planet.SetSpeed(Planet.Speed);
     }
 }

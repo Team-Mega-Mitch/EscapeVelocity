@@ -12,11 +12,12 @@ public class PlanetDesertsEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        Planet.SetSeed();
-        Planet.SetColors();
+        Planet.SetSeed(Planet.SurfaceSeed);
+        Planet.SetColors(Planet.SurfaceColor, Planet.AtmosphereColor);
+        Planet.SetPixels(Planet.Pixels);
         Planet.SetSize(Planet.Size);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetLight(Planet.LightOrigin);
-        Planet.SetSpeed();
+        Planet.SetSpeed(Planet.Speed);
     }
 }

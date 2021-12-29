@@ -271,10 +271,10 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  EmmisionColor: {r: 1, g: 1, b: 0.89411765, a: 1}
+  EmissionColor: {r: 0.9882353, g: 0.99607843, b: 0.8901961, a: 1}
   SurfaceSeed: 1
   FlaresSeed: 1
-  EmmisionSeed: 1
+  EmissionSeed: 1
   Pixels: 128
 --- !u!1 &6460660644299959778
 GameObject:

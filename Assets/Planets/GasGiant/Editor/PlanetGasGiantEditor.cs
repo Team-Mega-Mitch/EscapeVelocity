@@ -12,11 +12,13 @@ public class PlanetGasGiantEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        Planet.SetSeed();
-        Planet.SetColors();
+        Planet.SetSeed(Planet.SurfaceSeed, Planet.Clouds1Seed, Planet.Clouds2Seed);
+        Planet.SetCloudCover(Planet.Clouds1Cover, Planet.Clouds2Cover);
+        Planet.SetColors(Planet.SurfaceColor, Planet.Clouds1Color, Planet.Clouds2Color);
+        Planet.SetPixels(Planet.Pixels);
         Planet.SetSize(Planet.Size);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetLight(Planet.LightOrigin);
-        Planet.SetSpeed();
+        Planet.SetSpeed(Planet.Speed);
     }
 }

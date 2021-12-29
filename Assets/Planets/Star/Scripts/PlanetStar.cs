@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlanetStar : MonoBehaviour, PlanetInterface {
+public class PlanetStar : MonoBehaviour {
     [Header("Transform")]
     [Range(0f, 5f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
@@ -10,41 +10,34 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
     [Header("Colors")]
     public Gradient SurfaceColor;
     public Gradient FlaresColor;
-    public Color EmmisionColor;
+    public Color EmissionColor;
 
     [Header("Seeds")]
     [Range(1, 100)] public int SurfaceSeed = 1;
     [Range(1, 100)] public int FlaresSeed = 1;
-    [Range(1, 100)] public int EmmisionSeed = 1;
+    [Range(1, 100)] public int EmissionSeed = 1;
 
     [Header("Misc")]
     [Range(0f, 256)] public int Pixels = 128;
 
-    [HideInInspector] public PlanetLayer Surface;
-    [HideInInspector] public PlanetLayer Flares;
-    [HideInInspector] public PlanetLayer Emission;
+    private PlanetLayer _Surface;
+    private PlanetLayer _Flares;
+    private PlanetLayer _Emission;
 
-    public bool Initialized {
-        get {
-            return _Initialized;
-        }
-    }
-
-    private bool _Initialized = false;
     private float _Timestamp = 0f;
 
     private void Awake() {
-        _Initialized = Initialize();
+        Initialize();
 
-        SetSeed();
-        SetColors();
+        SetSeed(SurfaceSeed, FlaresSeed, EmissionSeed);
+        SetColors(SurfaceColor, FlaresColor, EmissionColor);
         SetPixels(Pixels);
         SetSize(Size);
         SetRotate(Rotation);
-        SetSpeed();
+        SetSpeed(Speed);
     }
 
-    public bool Initialize() {
+    public void Initialize() {
         SpriteRenderer surfaceRenderer = transform.Find("Surface").GetComponent<SpriteRenderer>();
         SpriteRenderer flaresRenderer = transform.Find("Flares").GetComponent<SpriteRenderer>();
         SpriteRenderer emissionRenderer = transform.Find("Emission").GetComponent<SpriteRenderer>();
@@ -53,63 +46,70 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
         Material flaresMaterial = new Material(flaresRenderer.sharedMaterial);
         Material emissionMaterial = new Material(emissionRenderer.sharedMaterial);
 
-        Surface = new PlanetLayer(gameObject, surfaceRenderer, surfaceMaterial);
-        Flares = new PlanetLayer(gameObject, flaresRenderer, flaresMaterial);
-        Emission = new PlanetLayer(gameObject, emissionRenderer, emissionMaterial);
-
-        return true;
+        _Surface = new PlanetLayer(gameObject, surfaceRenderer, surfaceMaterial);
+        _Flares = new PlanetLayer(gameObject, flaresRenderer, flaresMaterial);
+        _Emission = new PlanetLayer(gameObject, emissionRenderer, emissionMaterial);
     }
 
-    public void SetSeed() {
-        Surface.SetMaterialProperty(ShaderProperties.Seed, SurfaceSeed);
-        Flares.SetMaterialProperty(ShaderProperties.Seed, FlaresSeed);
-        Emission.SetMaterialProperty(ShaderProperties.Seed, EmmisionSeed);
+    public void SetSeed(int surfaceSeed, int flaresSeed, int emissionSeed) {
+        _Surface.SetMaterialProperty(ShaderProperties.Seed, surfaceSeed);
+        _Flares.SetMaterialProperty(ShaderProperties.Seed, flaresSeed);
+        _Emission.SetMaterialProperty(ShaderProperties.Seed, emissionSeed);
+
+        SurfaceSeed = surfaceSeed;
+        FlaresSeed = flaresSeed;
+        EmissionSeed = emissionSeed;
     }
 
     public void SetPixels(float ppu) {
-        Surface.SetMaterialProperty(ShaderProperties.Pixels, ppu);
-        Emission.SetMaterialProperty(ShaderProperties.Pixels, ppu * 2);
-        Flares.SetMaterialProperty(ShaderProperties.Pixels, ppu * 2);
-    }
+        _Surface.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Emission.SetMaterialProperty(ShaderProperties.Pixels, ppu * 2);
+        _Flares.SetMaterialProperty(ShaderProperties.Pixels, ppu * 2);
 
-    public void SetLight(Vector2 position) {
-        return;
+        Pixels = (int)ppu;
     }
 
     public void SetRotate(float rotation) {
-        Emission.SetMaterialProperty(ShaderProperties.Rotation, rotation);
-        Flares.SetMaterialProperty(ShaderProperties.Rotation, rotation);
-        Surface.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+        _Emission.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+        _Flares.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+        _Surface.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+
+        Rotation = rotation;
     }
 
     public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
 
-        SetPixels(Pixels * size);
+        // Scale for pixel size, without tampering "pixels" property
+        _Surface.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+        _Emission.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels * 2);
+        _Flares.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels * 2);
+
+        Size = size;
     }
 
-    public void SetSpeed() {
-        Surface.SetMaterialProperty(ShaderProperties.Speed, Speed);
-        Flares.SetMaterialProperty(ShaderProperties.Speed, Speed * 0.5f);
-        Emission.SetMaterialProperty(ShaderProperties.Speed, Speed);
+    public void SetSpeed(float speed) {
+        _Surface.SetMaterialProperty(ShaderProperties.Speed, speed);
+        _Flares.SetMaterialProperty(ShaderProperties.Speed, speed * 0.5f);
+        _Emission.SetMaterialProperty(ShaderProperties.Speed, speed);
+
+        Speed = speed;
     }
 
-    public void SetColors() {
-        Surface.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(SurfaceColor));
-        Flares.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(FlaresColor));
-        Emission.SetMaterialProperty(ShaderProperties.Color, EmmisionColor);
-    }
+    public void SetColors(Gradient surfaceColors, Gradient flaresColors, Color emissionColors) {
+        _Surface.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(surfaceColors));
+        _Flares.SetMaterialProperty(ShaderProperties.GradientTex, PlanetUtil.GenTexture(flaresColors));
+        _Emission.SetMaterialProperty(ShaderProperties.Color, emissionColors);
 
-    public void SetStartTime(float start) {
-        Surface.SetMaterialProperty(ShaderProperties.Timestamp, start);
-        Flares.SetMaterialProperty(ShaderProperties.Timestamp, start);
-        Emission.SetMaterialProperty(ShaderProperties.Timestamp, start);
+        SurfaceColor = surfaceColors;
+        FlaresColor = flaresColors;
+        EmissionColor = emissionColors;
     }
 
     public void UpdateTime(float time) {
-        Surface.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.1f);
-        Flares.SetMaterialProperty(ShaderProperties.Timestamp, time);
-        Emission.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        _Surface.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.1f);
+        _Flares.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        _Emission.SetMaterialProperty(ShaderProperties.Timestamp, time);
     }
 
     private void Update() {

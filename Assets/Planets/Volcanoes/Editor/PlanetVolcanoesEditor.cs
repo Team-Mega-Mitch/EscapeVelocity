@@ -12,12 +12,14 @@ public class PlanetVolcanoesEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        Planet.SetSeed();
-        Planet.SetColors();
+        Planet.SetSeed(Planet.LandSeed, Planet.CratersSeed, Planet.LavaSeed);
+        Planet.SetLavaFlow(Planet.LavaFlow);
+        Planet.SetColors(Planet.LandColor, Planet.CratersColor, Planet.LavaColor, Planet.AtmosphereColor);
+        Planet.SetPixels(Planet.Pixels);
         Planet.SetSize(Planet.Size);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetLight(Planet.LightOrigin);
-        Planet.SetSpeed();
+        Planet.SetSpeed(Planet.Speed);
         Planet.EnableCraters(Planet.CratersEnabled);
     }
 }

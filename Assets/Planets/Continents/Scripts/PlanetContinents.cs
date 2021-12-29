@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [ExecuteInEditMode]
-public class PlanetContinents : MonoBehaviour, PlanetInterface {
+public class PlanetContinents : MonoBehaviour {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
@@ -26,33 +26,28 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface {
     [Range(0f, 1f)] public float CloudCover = 0.5f;
     [Range(0f, 1f)] public float WaterFlow = 0.55f;
 
-    [HideInInspector] public PlanetLayer Land;
-    [HideInInspector] public PlanetLayer Water;
-    [HideInInspector] public PlanetLayer Clouds;
-    [HideInInspector] public PlanetLayer Atmosphere;
+    private PlanetLayer _Land;
+    private PlanetLayer _Water;
+    private PlanetLayer _Clouds;
+    private PlanetLayer _Atmosphere;
 
-    public bool Initialized {
-        get {
-            return _Initialized;
-        }
-    }
-
-    private bool _Initialized = false;
     private float _Timestamp = 0f;
 
     private void Awake() {
-        _Initialized = Initialize();
+        Initialize();
 
-        SetSeed();
-        SetColors();
+        SetSeed(LandSeed, WaterSeed, CloudsSeed);
+        SetWaterFlow(WaterFlow);
+        SetCloudCover(CloudCover);
+        SetColors(LandColor, WaterColor, CloudsColor, AtmosphereColor);
         SetPixels(Pixels);
         SetSize(Size);
         SetRotate(Rotation);
         SetLight(LightOrigin);
-        SetSpeed();
+        SetSpeed(PlanetSpeed, CloudSpeed);
     }
 
-    public bool Initialize() {
+    public void Initialize() {
         SpriteRenderer landRenderer = transform.Find("Land").GetComponent<SpriteRenderer>();
         SpriteRenderer waterRenderer = transform.Find("Water").GetComponent<SpriteRenderer>();
         SpriteRenderer cloudsRenderer = transform.Find("Clouds").GetComponent<SpriteRenderer>();
@@ -63,56 +58,82 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface {
         Material cloudsMaterial = new Material(cloudsRenderer.sharedMaterial);
         Material atmosphereMaterial = new Material(atmosphereRenderer.sharedMaterial);
 
-        Land = new PlanetLayer(gameObject, landRenderer, landMaterial);
-        Water = new PlanetLayer(gameObject, waterRenderer, waterMaterial);
-        Clouds = new PlanetLayer(gameObject, cloudsRenderer, cloudsMaterial);
-        Atmosphere = new PlanetLayer(gameObject, atmosphereRenderer, atmosphereMaterial);
-
-        return true;
+        _Land = new PlanetLayer(gameObject, landRenderer, landMaterial);
+        _Water = new PlanetLayer(gameObject, waterRenderer, waterMaterial);
+        _Clouds = new PlanetLayer(gameObject, cloudsRenderer, cloudsMaterial);
+        _Atmosphere = new PlanetLayer(gameObject, atmosphereRenderer, atmosphereMaterial);
     }
 
-    public void SetSeed() {
-        Water.SetMaterialProperty(ShaderProperties.Seed, WaterSeed);
-        Land.SetMaterialProperty(ShaderProperties.Seed, LandSeed);
-        Clouds.SetMaterialProperty(ShaderProperties.Seed, CloudsSeed);
+    public void SetSeed(int landSeed, int waterSeed, int cloudsSeed) {
+        _Land.SetMaterialProperty(ShaderProperties.Seed, landSeed);
+        _Water.SetMaterialProperty(ShaderProperties.Seed, waterSeed);
+        _Clouds.SetMaterialProperty(ShaderProperties.Seed, cloudsSeed);
 
-        Land.SetMaterialProperty(ShaderProperties.FlowRate, WaterFlow);
-        Clouds.SetMaterialProperty(ShaderProperties.CloudCover, CloudCover);
+        LandSeed = landSeed;
+        WaterSeed = waterSeed;
+        CloudsSeed = cloudsSeed;
+    }
+
+    public void SetWaterFlow(float amount) {
+        _Land.SetMaterialProperty(ShaderProperties.FlowRate, WaterFlow);
+
+        WaterFlow = amount;
+    }
+
+    public void SetCloudCover(float amount) {
+        _Clouds.SetMaterialProperty(ShaderProperties.CloudCover, CloudCover);
+
+        CloudCover = amount;
     }
 
     public void SetPixels(float ppu) {
-        Water.SetMaterialProperty(ShaderProperties.Pixels, ppu);
-        Land.SetMaterialProperty(ShaderProperties.Pixels, ppu);
-        Clouds.SetMaterialProperty(ShaderProperties.Pixels, ppu);
-        Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Land.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Water.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Clouds.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+
+        Pixels = (int)ppu;
     }
 
     public void SetLight(Vector2 position) {
-        Water.SetMaterialProperty(ShaderProperties.LightOrigin, position);
-        Land.SetMaterialProperty(ShaderProperties.LightOrigin, position);
-        Clouds.SetMaterialProperty(ShaderProperties.LightOrigin, position);
-        Atmosphere.SetMaterialProperty(ShaderProperties.LightOrigin, position);
+        _Land.SetMaterialProperty(ShaderProperties.LightOrigin, position);
+        _Water.SetMaterialProperty(ShaderProperties.LightOrigin, position);
+        _Clouds.SetMaterialProperty(ShaderProperties.LightOrigin, position);
+        _Atmosphere.SetMaterialProperty(ShaderProperties.LightOrigin, position);
+
+        LightOrigin = position;
     }
 
     public void SetRotate(float rotation) {
-        Water.SetMaterialProperty(ShaderProperties.Rotation, rotation);
-        Land.SetMaterialProperty(ShaderProperties.Rotation, rotation);
-        Clouds.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+        _Land.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+        _Water.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+        _Clouds.SetMaterialProperty(ShaderProperties.Rotation, rotation);
+
+        Rotation = rotation;
     }
 
     public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
 
-        SetPixels(Pixels * size);
+        // Scale for pixel size, without tampering "pixels" property
+        _Land.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+        _Water.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+        _Clouds.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+        _Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+
+        Size = size;
     }
 
-    public void SetSpeed() {
-        Clouds.SetMaterialProperty(ShaderProperties.Speed, CloudSpeed);
-        Water.SetMaterialProperty(ShaderProperties.Speed, PlanetSpeed);
-        Land.SetMaterialProperty(ShaderProperties.Speed, PlanetSpeed);
+    public void SetSpeed(float planetSpeed, float cloudSpeed) {
+        _Land.SetMaterialProperty(ShaderProperties.Speed, planetSpeed);
+        _Water.SetMaterialProperty(ShaderProperties.Speed, planetSpeed);
+        _Clouds.SetMaterialProperty(ShaderProperties.Speed, cloudSpeed);
+
+        PlanetSpeed = planetSpeed;
+        CloudSpeed = cloudSpeed;
     }
 
-    public void SetColors() {
+    public void SetColors(Gradient landColors, Gradient waterColors, Gradient cloudsColors, Color atmosphereColor) {
         Dictionary<string, float> colors;
 
         // Set land colors.
@@ -124,7 +145,7 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface {
         };
 
         foreach (KeyValuePair<string, float> element in colors) {
-            Land.SetMaterialProperty(element.Key, LandColor.Evaluate(element.Value));
+            _Land.SetMaterialProperty(element.Key, landColors.Evaluate(element.Value));
         }
 
         // Set water colors.
@@ -135,7 +156,7 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface {
         };
 
         foreach (KeyValuePair<string, float> element in colors) {
-            Water.SetMaterialProperty(element.Key, WaterColor.Evaluate(element.Value));
+            _Water.SetMaterialProperty(element.Key, waterColors.Evaluate(element.Value));
         }
 
         // Set cloud colors.
@@ -147,29 +168,22 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface {
         };
 
         foreach (KeyValuePair<string, float> element in colors) {
-            Clouds.SetMaterialProperty(element.Key, CloudsColor.Evaluate(element.Value));
+            _Clouds.SetMaterialProperty(element.Key, cloudsColors.Evaluate(element.Value));
         }
 
         // Set atmostphere color.
-        Atmosphere.SetMaterialProperty(ShaderProperties.Color, AtmosphereColor);
-    }
+        _Atmosphere.SetMaterialProperty(ShaderProperties.Color, atmosphereColor);
 
-    public void UpdateMaterial(SpriteRenderer renderer, Material material) {
-        renderer.sharedMaterial = material;
-    }
-
-    public void SetStartTime(float start) {
-        float time = 10f + start * 60f;
-
-        Clouds.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
-        Water.SetMaterialProperty(ShaderProperties.Timestamp, time);
-        Land.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        LandColor = landColors;
+        WaterColor = waterColors;
+        CloudsColor = cloudsColors;
+        AtmosphereColor = atmosphereColor;
     }
 
     public void UpdateTime(float time) {
-        Clouds.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
-        Water.SetMaterialProperty(ShaderProperties.Timestamp, time);
-        Land.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        _Land.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        _Water.SetMaterialProperty(ShaderProperties.Timestamp, time);
+        _Clouds.SetMaterialProperty(ShaderProperties.Timestamp, time * 0.5f);
     }
 
     private void Update() {
