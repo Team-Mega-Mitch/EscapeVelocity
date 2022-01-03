@@ -78,9 +78,4 @@ public class Spawner : MonoBehaviour {
             }
         }
     }
-
-    private void Update() {
-        // float speed = 10;
-        // transform.position += new Vector3(0, 1, 0) * Time.deltaTime * speed;
-    }
 }
