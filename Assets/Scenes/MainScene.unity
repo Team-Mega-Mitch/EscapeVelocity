@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 74256949}
+  - component: {fileID: 74256950}
   - component: {fileID: 74256948}
   m_Layer: 0
   m_Name: Spawner
@@ -152,16 +153,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227c367df44ae614fb88bc54dd312c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Planets:
-  - {fileID: 324996936828146338, guid: ff4762d9ab84e4e45812ba59768074ae, type: 3}
-  - {fileID: 450546459974097149, guid: 70357aa5543360e40a1a5b83834fbf87, type: 3}
-  - {fileID: 5844603311087691693, guid: cced6e84ddab3b74b8f7a19b3f23af47, type: 3}
-  - {fileID: 1058628716350234854, guid: fa5214d361f36c946b99b319d2527d89, type: 3}
-  - {fileID: 8334319690652084921, guid: 2683e1232cf43b444854d2820d97b3ff, type: 3}
-  - {fileID: 6834058513871534735, guid: fd6dc77d130c8e14aaca657559b0cb4a, type: 3}
-  - {fileID: 2644427685919356948, guid: 7a91555f718ae714d97a2b3e2c8e2b6a, type: 3}
-  - {fileID: 6460660643647822173, guid: d3c4336f56ff5694782186f48f09c664, type: 3}
-  - {fileID: 4273795969087695311, guid: bba8a2fab5ee06b4abbfc9f14b039997, type: 3}
+  ChunkGrid: {x: 3, y: 3}
+  ChunkSize: 60
+  Amount: 20
+  Padding: 5
+  Sampling: 15
+  SizeDistribution:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.0036349185
+      outSlope: 0.0036349185
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.6
+      value: 2
+      inSlope: 2.5000002
+      outSlope: 2.5000002
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9
+      value: 3
+      inSlope: 6.6666656
+      outSlope: 6.6666656
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.99
+      value: 3.9
+      inSlope: 9.999998
+      outSlope: 9.999998
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 4
+      inSlope: 10
+      outSlope: 10
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CommonPlanets:
+  - {fileID: 2850093778077811203, guid: d3edaa4069659b74f8d968d784a0bdd7, type: 3}
+  UncommonPlanets:
+  - {fileID: 2850093778077811203, guid: 56d1c7e844e745f4bad981bd9df0f169, type: 3}
+  RarePlanets:
+  - {fileID: 2850093778077811203, guid: 97eb5a2a23cb40a4ba8f8d67a2a10a64, type: 3}
+  LegendaryPlanets:
+  - {fileID: 2850093778077811203, guid: 4977f76df11415140a5f1a7214c685cd, type: 3}
 --- !u!4 &74256949
 Transform:
   m_ObjectHideFlags: 0
@@ -176,6 +231,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &74256950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74256947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339516f0804c0ea47b5292e2269d8c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RandomSeedOverride: 0
+  Seed: 054083c3b8a6830fcc5e96821407c749
 --- !u!1 &374383815
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,48 +382,3 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
---- !u!1 &1476914031
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1476914033}
-  - component: {fileID: 1476914032}
-  m_Layer: 0
-  m_Name: Seeder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1476914032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476914031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 339516f0804c0ea47b5292e2269d8c29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RandomSeedOverride: 1
-  Seed: 564af2c62ca615d581c43dd7177bcc3d
---- !u!4 &1476914033
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476914031}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -3,7 +3,7 @@ Shader "Planet/Test/Circle"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-	    _Color("Color", Color) = (255, 0, 0, 1)
+	    _Color("Color", Color) = (1, 1, 1, 1)
 		_Radius("Radius", range(0, 1)) = 0.5
     }
     SubShader

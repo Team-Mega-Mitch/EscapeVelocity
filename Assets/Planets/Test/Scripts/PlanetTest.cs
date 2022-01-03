@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlanetTest : MonoBehaviour {
+public class PlanetTest : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
 

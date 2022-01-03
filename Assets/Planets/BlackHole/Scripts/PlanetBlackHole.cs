@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlanetBlackHole : MonoBehaviour {
+public class PlanetBlackHole : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 3.75f;

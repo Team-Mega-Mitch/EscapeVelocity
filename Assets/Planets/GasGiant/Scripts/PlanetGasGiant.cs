@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 [ExecuteInEditMode]
-public class PlanetGasGiant : MonoBehaviour {
+public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 2f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;

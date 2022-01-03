@@ -82,7 +82,7 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _CloudCover: 0.7
+    - _CloudCover: 0.35
     - _CloudCurve: 1.3
     - _Cloud_cover: 0.35
     - _Cloud_curve: 1.043

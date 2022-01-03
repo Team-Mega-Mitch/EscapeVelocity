@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9003215092192838273}
+  - component: {fileID: 2834525876469643529}
   - component: {fileID: 1537992959993308608}
   m_Layer: 0
-  m_Name: PlanetTest
+  m_Name: PlanetTestCommon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,6 +33,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2834525876469643529
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850093778077811203}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.5
 --- !u!114 &1537992959993308608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Size: 1
-  Color: {r: 1, g: 0, b: 0, a: 1}
+  Color: {r: 0, g: 1, b: 0.07058835, a: 1}
 --- !u!1 &4446028074791139527
 GameObject:
   m_ObjectHideFlags: 0

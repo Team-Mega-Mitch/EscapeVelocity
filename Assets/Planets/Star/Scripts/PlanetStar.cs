@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlanetStar : MonoBehaviour {
+public class PlanetStar : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
     [Range(0f, 5f)] public float Size = 1.0f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
