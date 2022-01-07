@@ -12,7 +12,9 @@ public class SpawnerEditor : Editor {
     protected virtual void OnSceneGUI() {
         Handles.color = Color.green;
 
-        GenerateGrid();
+        if (Spawner.PreviewChunkGrid) {
+            GenerateGrid();
+        }
     }
 
     private void GenerateGrid() {
@@ -21,8 +23,8 @@ public class SpawnerEditor : Editor {
                 int colOffset = ((Spawner.ChunkGrid.x * Spawner.ChunkSize) - Spawner.ChunkSize); // Used to make sure x is centered.
 
                 Vector2 position = new Vector2((col * (Spawner.ChunkSize * 2)) - colOffset, row * (Spawner.ChunkSize * 2));
-                position.x += Spawner.transform.position.x;
-                position.y += Spawner.transform.position.y;
+                position.x += Spawner.transform.position.x * 2f;
+                position.y += Spawner.transform.position.y * 2f;
 
                 Handles.RectangleHandleCap(0, position / 2, Quaternion.identity, Spawner.ChunkSize / 2, EventType.Repaint);
             }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
     [Header("Chunking")]
+    public bool PreviewChunkGrid = true;
     public Vector2Int ChunkGrid;
     [Range(10, 100)] public int ChunkSize;
 
@@ -17,34 +18,55 @@ public class Spawner : MonoBehaviour {
     public GameObject[] RarePlanets;
     public GameObject[] LegendaryPlanets;
 
+    private GameObject[,] _Chunks;
+    private int _TotalChunkRows = 0;
+
     private void Start() {
         GenerateChunks();
     }
 
+    private void UpdateChunks() {
+        for (int row = 0; row < _Chunks.GetLength(1); row++) {
+            Destroy(_Chunks[0, row]);
+
+            for (int col = 0; col < _Chunks.GetUpperBound(0); col++) {
+                _Chunks[col, row] = _Chunks[col + 1, row]; // Shift rows down by one.
+            }
+
+            int newCol = _Chunks.GetUpperBound(0);
+
+            Vector2 position = new Vector2(_Chunks[newCol - 1, row].transform.position.x, _Chunks[newCol - 1, row].transform.position.y + ChunkSize);
+            _Chunks[newCol, row] = NewChunk("Chunk" + _TotalChunkRows + row, position);
+
+            SpawnPlanets(_Chunks[newCol, row]);
+
+        }
+
+        _TotalChunkRows++;
+    }
+
     private void GenerateChunks() {
+        _Chunks = new GameObject[ChunkGrid.y, ChunkGrid.x];
+
         for (int row = 0; row < ChunkGrid.y; row++) {
             for (int col = 0; col < ChunkGrid.x; col++) {
-                GameObject chunk = new GameObject();
-
-                chunk.name = "Chunk";
-
                 // Can the math be optimized?
                 int colOffset = ((ChunkGrid.x * ChunkSize) - ChunkSize); // Used to make sure x is centered.
                 Vector2 position = new Vector2((col * (ChunkSize * 2)) - colOffset, row * (ChunkSize * 2));
-                chunk.transform.position = position / 2;
 
-                SpawnPlanets(chunk);
+                _Chunks[row, col] = NewChunk("Chunk" + _TotalChunkRows + col, position / 2);
+                SpawnPlanets(_Chunks[row, col]);
             }
+
+            _TotalChunkRows++;
         }
     }
 
-    private Vector2 GetRandomLocationInChunk(GameObject chunk) {
-        Vector3 location = new Vector2(Random.Range(-.5f, .5f), Random.Range(-.5f, .5f)) * ChunkSize;
+    private GameObject NewChunk(string name, Vector2 position) {
+        GameObject chunk = new GameObject(name);
+        chunk.transform.position = position;
 
-        location.x += chunk.transform.position.x;
-        location.y += chunk.transform.position.y;
-
-        return location;
+        return chunk;
     }
 
     private void SpawnPlanets(GameObject chunk) {
@@ -76,6 +98,25 @@ public class Spawner : MonoBehaviour {
                     break;
                 }
             }
+        }
+    }
+
+    private Vector2 GetRandomLocationInChunk(GameObject chunk) {
+        Vector3 location = new Vector2(Random.Range(-.5f, .5f), Random.Range(-.5f, .5f)) * ChunkSize;
+
+        location.x += chunk.transform.position.x;
+        location.y += chunk.transform.position.y;
+
+        return location;
+    }
+
+    private void Update() {
+        transform.position = new Vector2(transform.position.x, transform.position.y + 10 * Time.deltaTime);
+
+        float distance = _Chunks[1, 1].transform.position.y - gameObject.transform.position.y;
+
+        if (distance <= 0) {
+            UpdateChunks();
         }
     }
 }
