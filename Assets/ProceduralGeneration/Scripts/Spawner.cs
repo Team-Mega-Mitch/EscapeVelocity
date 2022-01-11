@@ -25,21 +25,23 @@ public class Spawner : MonoBehaviour {
         GenerateChunks();
     }
 
-    private void UpdateChunks() {
-        for (int row = 0; row < _Chunks.GetLength(1); row++) {
-            Destroy(_Chunks[0, row]);
+    private void UpdateChunks(Vector2 direction) {
+        if (direction.y == 1) {
+            for (int row = 0; row < _Chunks.GetLength(1); row++) {
+                Destroy(_Chunks[0, row]);
 
-            for (int col = 0; col < _Chunks.GetUpperBound(0); col++) {
-                _Chunks[col, row] = _Chunks[col + 1, row]; // Shift rows down by one.
+                for (int col = 0; col < _Chunks.GetUpperBound(0); col++) {
+                    _Chunks[col, row] = _Chunks[col + 1, row]; // Shift rows down by one.
+                }
+
+                int newCol = _Chunks.GetUpperBound(0);
+
+                Vector2 position = new Vector2(_Chunks[newCol - 1, row].transform.position.x, _Chunks[newCol - 1, row].transform.position.y + ChunkSize);
+                _Chunks[newCol, row] = NewChunk("Chunk" + _TotalChunkRows + row, position);
+
+                SpawnPlanets(_Chunks[newCol, row]);
+
             }
-
-            int newCol = _Chunks.GetUpperBound(0);
-
-            Vector2 position = new Vector2(_Chunks[newCol - 1, row].transform.position.x, _Chunks[newCol - 1, row].transform.position.y + ChunkSize);
-            _Chunks[newCol, row] = NewChunk("Chunk" + _TotalChunkRows + row, position);
-
-            SpawnPlanets(_Chunks[newCol, row]);
-
         }
 
         _TotalChunkRows++;
@@ -110,13 +112,34 @@ public class Spawner : MonoBehaviour {
         return location;
     }
 
-    private void Update() {
-        transform.position = new Vector2(transform.position.x, transform.position.y + 10 * Time.deltaTime);
+    private Vector2Int GetNewChunkDirection() {
+        Vector2Int direction = Vector2Int.zero;
+        float distance;
 
-        float distance = _Chunks[1, 1].transform.position.y - gameObject.transform.position.y;
-
+        distance = _Chunks[0, 2].transform.position.x - gameObject.transform.position.x;
         if (distance <= 0) {
-            UpdateChunks();
+            direction.x = 1;
+        } else if (distance > ChunkSize * 2) {
+            direction.x = -1;
         }
+
+        distance = _Chunks[1, 1].transform.position.y - gameObject.transform.position.y;
+        if (distance <= 0) {
+            direction.y = 1;
+        } else if (distance > ChunkSize * 2) {
+            direction.y = -1;
+        }
+
+        return direction;
+    }
+
+    private void Update() {
+        Vector2Int chunkDirection = GetNewChunkDirection();
+
+        if (chunkDirection != Vector2Int.zero) {
+            Debug.Log(chunkDirection);
+        }
+
+        UpdateChunks(chunkDirection);
     }
 }
