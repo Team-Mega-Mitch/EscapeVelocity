@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PreviewChunkGrid: 1
   ChunkGrid: {x: 3, y: 2}
-  ChunkSize: 60
+  ChunkSize: 100
   Amount: 25
   Padding: 5
   Sampling: 15
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RandomSeedOverride: 1
-  Seed: add7fc42181fb863396feb4da04c9d4a
+  Seed: 1c790d4c547012f3b99625d3d727c406
 --- !u!1 &374383815
 GameObject:
   m_ObjectHideFlags: 0

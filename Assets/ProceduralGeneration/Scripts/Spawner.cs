@@ -35,28 +35,69 @@ public class Spawner : MonoBehaviour {
                 }
 
                 int newCol = _Chunks.GetUpperBound(0);
-
                 Vector2 position = new Vector2(_Chunks[newCol - 1, row].transform.position.x, _Chunks[newCol - 1, row].transform.position.y + ChunkSize);
-                _Chunks[newCol, row] = NewChunk("Chunk" + _TotalChunkRows + row, position);
 
+                _Chunks[newCol, row] = NewChunk("Chunk" + _TotalChunkRows + row, position);
                 SpawnPlanets(_Chunks[newCol, row]);
 
+                _TotalChunkRows++;
+            }
+        } else if (direction.y == -1) {
+            for (int row = _Chunks.GetUpperBound(1); row >= 0; row--) {
+                Destroy(_Chunks[_Chunks.GetUpperBound(0), row]);
+
+                for (int col = _Chunks.GetUpperBound(0) - 1; col >= 0; col--) {
+                    _Chunks[col + 1, row] = _Chunks[col, row];
+                }
+
+                int newCol = _Chunks.GetLowerBound(1);
+                Vector2 position = new Vector2(_Chunks[newCol + 1, row].transform.position.x, _Chunks[newCol + 1, row].transform.position.y - ChunkSize);
+
+                _Chunks[newCol, row] = NewChunk("Chunk", position);
+                SpawnPlanets(_Chunks[newCol, row]);
+            }
+        } else if (direction.x == 1) {
+            for (int col = 0; col < _Chunks.GetLength(0); col++) {
+                Destroy(_Chunks[col, 0]);
+
+                for (int row = 0; row < _Chunks.GetUpperBound(1); row++) {
+                    _Chunks[col, row] = _Chunks[col, row + 1]; // Shift the cols left by one.
+                }
+
+                int newRow = _Chunks.GetUpperBound(1);
+                Vector2 position = new Vector2(_Chunks[col, newRow - 1].transform.position.x + ChunkSize, _Chunks[col, newRow - 1].transform.position.y);
+
+                _Chunks[col, newRow] = NewChunk("Chunk", position);
+                SpawnPlanets(_Chunks[col, newRow]);
+            }
+        } else if (direction.x == -1) {
+            for (int col = 0; col < _Chunks.GetLength(0); col++) {
+                Destroy(_Chunks[col, _Chunks.GetUpperBound(1)]);
+
+                for (int row = _Chunks.GetUpperBound(1) - 1; row >= 0; row--) {
+                    _Chunks[col, row + 1] = _Chunks[col, row];
+                }
+
+                int newRow = _Chunks.GetLowerBound(1);
+                Vector2 position = new Vector2(_Chunks[col, newRow + 1].transform.position.x - ChunkSize, _Chunks[col, newRow + 1].transform.position.y);
+
+                _Chunks[col, newRow] = NewChunk("Chunk", position);
+                SpawnPlanets(_Chunks[col, newRow]);
             }
         }
-
-        _TotalChunkRows++;
     }
 
     private void GenerateChunks() {
         _Chunks = new GameObject[ChunkGrid.y, ChunkGrid.x];
+        int colOffset = ((ChunkGrid.x - 1) * ChunkSize) / 2;
 
         for (int row = 0; row < ChunkGrid.y; row++) {
             for (int col = 0; col < ChunkGrid.x; col++) {
-                // Can the math be optimized?
-                int colOffset = ((ChunkGrid.x * ChunkSize) - ChunkSize); // Used to make sure x is centered.
-                Vector2 position = new Vector2((col * (ChunkSize * 2)) - colOffset, row * (ChunkSize * 2));
+                Vector2 position = new Vector2((col * ChunkSize) - colOffset, row * ChunkSize);
+                position.x += transform.position.x;
+                position.y += transform.position.y;
 
-                _Chunks[row, col] = NewChunk("Chunk" + _TotalChunkRows + col, position / 2);
+                _Chunks[row, col] = NewChunk("Chunk" + _TotalChunkRows + col, position);
                 SpawnPlanets(_Chunks[row, col]);
             }
 
@@ -104,7 +145,7 @@ public class Spawner : MonoBehaviour {
     }
 
     private Vector2 GetRandomLocationInChunk(GameObject chunk) {
-        Vector3 location = new Vector2(Random.Range(-.5f, .5f), Random.Range(-.5f, .5f)) * ChunkSize;
+        Vector2 location = new Vector2(Random.Range(-.5f, .5f), Random.Range(-.5f, .5f)) * ChunkSize;
 
         location.x += chunk.transform.position.x;
         location.y += chunk.transform.position.y;
@@ -115,19 +156,24 @@ public class Spawner : MonoBehaviour {
     private Vector2Int GetNewChunkDirection() {
         Vector2Int direction = Vector2Int.zero;
         float distance;
+        int centerChunk = (ChunkGrid.x - 1) / 2;
 
-        distance = _Chunks[0, 2].transform.position.x - gameObject.transform.position.x;
-        if (distance <= 0) {
-            direction.x = 1;
-        } else if (distance > ChunkSize * 2) {
-            direction.x = -1;
+        if (_Chunks[0, centerChunk + 1] != null) {
+            distance = _Chunks[0, centerChunk + 1].transform.position.x - gameObject.transform.position.x;
+            if (distance <= 0) {
+                direction.x = 1;
+            } else if (distance > ChunkSize * 2) {
+                direction.x = -1;
+            }
         }
 
-        distance = _Chunks[1, 1].transform.position.y - gameObject.transform.position.y;
-        if (distance <= 0) {
-            direction.y = 1;
-        } else if (distance > ChunkSize * 2) {
-            direction.y = -1;
+        if (_Chunks[1, centerChunk] != null) {
+            distance = _Chunks[1, centerChunk].transform.position.y - gameObject.transform.position.y;
+            if (distance <= 0) {
+                direction.y = 1;
+            } else if (distance > ChunkSize * 2) {
+                direction.y = -1;
+            }
         }
 
         return direction;
@@ -137,9 +183,7 @@ public class Spawner : MonoBehaviour {
         Vector2Int chunkDirection = GetNewChunkDirection();
 
         if (chunkDirection != Vector2Int.zero) {
-            Debug.Log(chunkDirection);
+            UpdateChunks(chunkDirection);
         }
-
-        UpdateChunks(chunkDirection);
     }
 }
