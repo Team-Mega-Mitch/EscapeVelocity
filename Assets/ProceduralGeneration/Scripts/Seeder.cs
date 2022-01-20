@@ -5,17 +5,21 @@ public class Seeder : MonoBehaviour {
     public bool RandomSeedOverride = false;
     public string Seed;
 
-    private int _Seed;
+    private string _OriginSeed;
 
     private void Awake() {
+        _OriginSeed = Seed;
+
         if (RandomSeedOverride) {
             Seed = GenSeed();
         }
 
-        _Seed = ParseSeed(Seed);
-        Random.InitState(_Seed);
-
+        SetSeed(Seed);
         Debug.Log("Seed: " + Seed);
+    }
+
+    public static void SetSeed(string seed) {
+        Random.InitState(ParseSeed(seed));
     }
 
     public string GenSeed() {
@@ -28,7 +32,7 @@ public class Seeder : MonoBehaviour {
         return System.BitConverter.ToString(bytes).Replace("-", "").ToLower();
     }
 
-    private int ParseSeed(string seed) {
+    private static int ParseSeed(string seed) {
         if (string.IsNullOrEmpty(seed)) {
             return (int)Random.Range(-999999999f, 999999999f);
         }

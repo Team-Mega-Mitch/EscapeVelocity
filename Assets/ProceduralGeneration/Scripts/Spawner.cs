@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour {
     [Header("Chunking")]
@@ -19,10 +20,14 @@ public class Spawner : MonoBehaviour {
     public GameObject[] LegendaryPlanets;
 
     private GameObject[,] _Chunks;
-    private int _TotalChunkRows = 0;
+    private Dictionary<Vector2, int> _TrackedChunks = new Dictionary<Vector2, int>();
 
     private void Start() {
         GenerateChunks();
+
+        foreach (KeyValuePair<Vector2, int> chunk in _TrackedChunks) {
+            Debug.Log(chunk.Key + ": " + chunk.Value);
+        }
     }
 
     private void UpdateChunks(Vector2 direction) {
@@ -37,11 +42,12 @@ public class Spawner : MonoBehaviour {
                 int newCol = _Chunks.GetUpperBound(0);
                 Vector2 position = new Vector2(_Chunks[newCol - 1, row].transform.position.x, _Chunks[newCol - 1, row].transform.position.y + ChunkSize);
 
-                _Chunks[newCol, row] = NewChunk("Chunk" + _TotalChunkRows + row, position);
-                SpawnPlanets(_Chunks[newCol, row]);
+                _Chunks[newCol, row] = NewChunk(position);
 
-                _TotalChunkRows++;
+                int rng = _TrackedChunks.ContainsKey(position) ? _TrackedChunks[position] : GenRandomNumber();
+                SpawnPlanets(rng, _Chunks[newCol, row]);
             }
+
         } else if (direction.y == -1) {
             for (int row = _Chunks.GetUpperBound(1); row >= 0; row--) {
                 Destroy(_Chunks[_Chunks.GetUpperBound(0), row]);
@@ -53,9 +59,12 @@ public class Spawner : MonoBehaviour {
                 int newCol = _Chunks.GetLowerBound(1);
                 Vector2 position = new Vector2(_Chunks[newCol + 1, row].transform.position.x, _Chunks[newCol + 1, row].transform.position.y - ChunkSize);
 
-                _Chunks[newCol, row] = NewChunk("Chunk", position);
-                SpawnPlanets(_Chunks[newCol, row]);
+                _Chunks[newCol, row] = NewChunk(position);
+
+                int rng = _TrackedChunks.ContainsKey(position) ? _TrackedChunks[position] : GenRandomNumber();
+                SpawnPlanets(rng, _Chunks[newCol, row]);
             }
+
         } else if (direction.x == 1) {
             for (int col = 0; col < _Chunks.GetLength(0); col++) {
                 Destroy(_Chunks[col, 0]);
@@ -67,8 +76,10 @@ public class Spawner : MonoBehaviour {
                 int newRow = _Chunks.GetUpperBound(1);
                 Vector2 position = new Vector2(_Chunks[col, newRow - 1].transform.position.x + ChunkSize, _Chunks[col, newRow - 1].transform.position.y);
 
-                _Chunks[col, newRow] = NewChunk("Chunk", position);
-                SpawnPlanets(_Chunks[col, newRow]);
+                _Chunks[col, newRow] = NewChunk(position);
+
+                int rng = _TrackedChunks.ContainsKey(position) ? _TrackedChunks[position] : GenRandomNumber();
+                SpawnPlanets(rng, _Chunks[col, newRow]);
             }
         } else if (direction.x == -1) {
             for (int col = 0; col < _Chunks.GetLength(0); col++) {
@@ -81,8 +92,10 @@ public class Spawner : MonoBehaviour {
                 int newRow = _Chunks.GetLowerBound(1);
                 Vector2 position = new Vector2(_Chunks[col, newRow + 1].transform.position.x - ChunkSize, _Chunks[col, newRow + 1].transform.position.y);
 
-                _Chunks[col, newRow] = NewChunk("Chunk", position);
-                SpawnPlanets(_Chunks[col, newRow]);
+                _Chunks[col, newRow] = NewChunk(position);
+
+                int rng = _TrackedChunks.ContainsKey(position) ? _TrackedChunks[position] : GenRandomNumber();
+                SpawnPlanets(rng, _Chunks[col, newRow]);
             }
         }
     }
@@ -97,22 +110,28 @@ public class Spawner : MonoBehaviour {
                 position.x += transform.position.x;
                 position.y += transform.position.y;
 
-                _Chunks[row, col] = NewChunk("Chunk" + _TotalChunkRows + col, position);
-                SpawnPlanets(_Chunks[row, col]);
+                _Chunks[row, col] = NewChunk(position);
+                SpawnPlanets(_TrackedChunks[position], _Chunks[row, col]);
             }
-
-            _TotalChunkRows++;
         }
+
     }
 
-    private GameObject NewChunk(string name, Vector2 position) {
-        GameObject chunk = new GameObject(name);
+    private GameObject NewChunk(Vector2 position) {
+        GameObject chunk = new GameObject("Chunk" + Utils.GenUUID(2));
         chunk.transform.position = position;
+
+        if (!_TrackedChunks.ContainsKey(position)) {
+            _TrackedChunks.Add(chunk.transform.position, GenRandomNumber());
+        }
 
         return chunk;
     }
 
-    private void SpawnPlanets(GameObject chunk) {
+    private void SpawnPlanets(int rng, GameObject chunk) {
+        Random.State currentState = Random.state;
+        Seeder.SetSeed(rng.ToString());
+
         for (int i = 0; i < Amount; i++) {
             for (int j = 0; j < Sampling; j++) {
                 float size = SizeDistribution.Evaluate(Random.value);
@@ -142,6 +161,9 @@ public class Spawner : MonoBehaviour {
                 }
             }
         }
+
+        Seeder.SetSeed(GetComponent<Seeder>().Seed);
+        Random.state = currentState;
     }
 
     private Vector2 GetRandomLocationInChunk(GameObject chunk) {
@@ -169,14 +191,23 @@ public class Spawner : MonoBehaviour {
 
         if (_Chunks[1, centerChunk] != null) {
             distance = _Chunks[1, centerChunk].transform.position.y - gameObject.transform.position.y;
+
             if (distance <= 0) {
                 direction.y = 1;
             } else if (distance > ChunkSize * 2) {
                 direction.y = -1;
             }
+
         }
 
         return direction;
+    }
+
+    private int GenRandomNumber() {
+        int num = Random.Range(100000000, 999999999);
+        Debug.Log(num);
+
+        return Random.Range(100000000, 999999999);
     }
 
     private void Update() {
