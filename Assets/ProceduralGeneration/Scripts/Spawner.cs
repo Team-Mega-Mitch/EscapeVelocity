@@ -146,10 +146,9 @@ public class Spawner : MonoBehaviour {
                         planetSelection = CommonPlanets;
                     }
 
-                    int index = Random.Range(0, planetSelection.Length - 1);
+                    int index = Random.Range(0, planetSelection.Length);
                     GameObject planet = Instantiate(planetSelection[index], location, Quaternion.identity);
 
-                    // planet.GetComponent<CircleCollider2D>().radius *= Padding;
                     AddPadding(planet);
                     planet.GetComponent<PlanetInterface>().SetSize(size);
                     planet.transform.parent = chunk.transform;
