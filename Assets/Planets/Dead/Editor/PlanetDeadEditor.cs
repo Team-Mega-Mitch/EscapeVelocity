@@ -13,9 +13,10 @@ public class PlanetDeadEditor : Editor {
         base.OnInspectorGUI();
 
         Planet.SetSeed(Planet.SurfaceSeed, Planet.CraterSeed);
+        Planet.SetGravity(Planet.GravitySize);
         Planet.SetColors(Planet.SurfaceColor, Planet.CraterColor);
         Planet.SetPixels(Planet.Pixels);
-        Planet.SetSize(Planet.Size);
+        Planet.SetSize(Planet.PlanetSize);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetLight(Planet.LightOrigin);
         Planet.SetSpeed(Planet.Speed);

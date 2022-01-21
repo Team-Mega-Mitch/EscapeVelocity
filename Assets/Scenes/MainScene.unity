@@ -211,13 +211,18 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   CommonPlanets:
-  - {fileID: 2850093778077811203, guid: d3edaa4069659b74f8d968d784a0bdd7, type: 3}
+  - {fileID: 450546459974097149, guid: 70357aa5543360e40a1a5b83834fbf87, type: 3}
+  - {fileID: 5844603311087691693, guid: cced6e84ddab3b74b8f7a19b3f23af47, type: 3}
+  - {fileID: 1058628716350234854, guid: fa5214d361f36c946b99b319d2527d89, type: 3}
+  - {fileID: 2644427685919356948, guid: 7a91555f718ae714d97a2b3e2c8e2b6a, type: 3}
+  - {fileID: 4273795969087695311, guid: bba8a2fab5ee06b4abbfc9f14b039997, type: 3}
   UncommonPlanets:
-  - {fileID: 2850093778077811203, guid: 56d1c7e844e745f4bad981bd9df0f169, type: 3}
+  - {fileID: 8334319690652084921, guid: 2683e1232cf43b444854d2820d97b3ff, type: 3}
+  - {fileID: 6834058513871534735, guid: fd6dc77d130c8e14aaca657559b0cb4a, type: 3}
   RarePlanets:
-  - {fileID: 2850093778077811203, guid: 97eb5a2a23cb40a4ba8f8d67a2a10a64, type: 3}
+  - {fileID: 6460660643647822173, guid: d3c4336f56ff5694782186f48f09c664, type: 3}
   LegendaryPlanets:
-  - {fileID: 2850093778077811203, guid: 4977f76df11415140a5f1a7214c685cd, type: 3}
+  - {fileID: 324996936828146338, guid: ff4762d9ab84e4e45812ba59768074ae, type: 3}
 --- !u!4 &74256949
 Transform:
   m_ObjectHideFlags: 0

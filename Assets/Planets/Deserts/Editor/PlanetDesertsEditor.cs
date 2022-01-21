@@ -13,9 +13,10 @@ public class PlanetDesertsEditor : Editor {
         base.OnInspectorGUI();
 
         Planet.SetSeed(Planet.SurfaceSeed);
+        Planet.SetGravity(Planet.GravitySize);
         Planet.SetColors(Planet.SurfaceColor, Planet.AtmosphereColor);
         Planet.SetPixels(Planet.Pixels);
-        Planet.SetSize(Planet.Size);
+        Planet.SetSize(Planet.PlanetSize);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetLight(Planet.LightOrigin);
         Planet.SetSpeed(Planet.Speed);

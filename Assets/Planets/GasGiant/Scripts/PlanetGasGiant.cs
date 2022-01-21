@@ -4,7 +4,8 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
-    [Range(0f, 2f)] public float Size = 1.0f;
+    [Range(0f, 2f)] public float PlanetSize = 1f;
+    [Range(1f, 5f)] public float GravitySize = 2f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
     [Range(-1f, 1f)] public float Speed = 0.5f;
 
@@ -27,6 +28,7 @@ public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
     private PlanetLayer _Surface;
     private PlanetLayer _Clouds1;
     private PlanetLayer _Clouds2;
+    private PlanetLayer _Gravity;
 
     private float _Timestamp = 0f;
 
@@ -34,9 +36,11 @@ public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
         Initialize();
 
         SetSeed(SurfaceSeed, Clouds1Seed, Clouds2Seed);
+        SetCloudCover(Clouds1Cover, Clouds2Cover);
+        SetGravity(GravitySize);
         SetColors(SurfaceColor, Clouds1Color, Clouds2Color);
         SetPixels(Pixels);
-        SetSize(Size);
+        SetSize(PlanetSize);
         SetRotate(Rotation);
         SetLight(LightOrigin);
         SetSpeed(Speed);
@@ -46,14 +50,17 @@ public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
         SpriteRenderer surfaceRenderer = transform.Find("Surface").GetComponent<SpriteRenderer>();
         SpriteRenderer clouds1Renderer = transform.Find("Clouds1").GetComponent<SpriteRenderer>();
         SpriteRenderer clouds2Renderer = transform.Find("Clouds2").GetComponent<SpriteRenderer>();
+        SpriteRenderer gravityRenderer = transform.Find("Gravity").GetComponent<SpriteRenderer>();
 
         Material surfaceMaterial = new Material(surfaceRenderer.sharedMaterial);
         Material clouds1Material = new Material(clouds1Renderer.sharedMaterial);
         Material clouds2Material = new Material(clouds2Renderer.sharedMaterial);
+        Material gravityMaterial = new Material(gravityRenderer.sharedMaterial);
 
         _Surface = new PlanetLayer(gameObject, surfaceRenderer, surfaceMaterial);
         _Clouds1 = new PlanetLayer(gameObject, clouds1Renderer, clouds1Material);
         _Clouds2 = new PlanetLayer(gameObject, clouds2Renderer, clouds2Material);
+        _Gravity = new PlanetLayer(gameObject, gravityRenderer, gravityMaterial);
     }
 
     public void SetSeed(int surfaceSeed, int clouds1Seed, int clouds2Seed) {
@@ -74,10 +81,18 @@ public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
         Clouds2Cover = clouds2Cover;
     }
 
+    public void SetGravity(float size) {
+        Transform gravity = transform.Find("Gravity");
+        gravity.transform.localScale = new Vector3(size, size, gravity.transform.localScale.z);
+
+        GravitySize = size;
+    }
+
     public void SetPixels(float ppu) {
         _Surface.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         _Clouds1.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         _Clouds2.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, ppu * GravitySize);
 
         Pixels = (int)ppu;
     }
@@ -105,8 +120,9 @@ public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
         _Surface.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
         _Clouds1.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
         _Clouds2.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, size * GravitySize * Pixels);
 
-        Size = size;
+        PlanetSize = size;
     }
 
     public void SetSpeed(float speed) {

@@ -15,7 +15,6 @@ public class Seeder : MonoBehaviour {
         }
 
         SetSeed(Seed);
-        Debug.Log("Seed: " + Seed);
     }
 
     public static void SetSeed(string seed) {

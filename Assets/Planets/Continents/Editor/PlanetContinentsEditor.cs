@@ -15,9 +15,10 @@ public class PlanetContinentsEditor : Editor {
         Planet.SetSeed(Planet.LandSeed, Planet.WaterSeed, Planet.CloudsSeed);
         Planet.SetWaterFlow(Planet.WaterFlow);
         Planet.SetCloudCover(Planet.CloudCover);
+        Planet.SetGravity(Planet.GravitySize);
         Planet.SetColors(Planet.LandColor, Planet.WaterColor, Planet.CloudsColor, Planet.AtmosphereColor);
         Planet.SetPixels(Planet.Pixels);
-        Planet.SetSize(Planet.Size);
+        Planet.SetSize(Planet.PlanetSize);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetLight(Planet.LightOrigin);
         Planet.SetSpeed(Planet.PlanetSpeed, Planet.CloudSpeed);

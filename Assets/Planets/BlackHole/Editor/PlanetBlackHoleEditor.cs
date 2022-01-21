@@ -13,9 +13,10 @@ public class PlanetBlackHoleEditor : Editor {
         base.OnInspectorGUI();
 
         Planet.SetSeed(Planet.DiskSeed);
+        Planet.SetGravity(Planet.GravitySize);
         Planet.SetColors(Planet.HoleColor, Planet.DiskColor);
         Planet.SetPixels(Planet.Pixels);
-        Planet.SetSize(Planet.Size);
+        Planet.SetSize(Planet.PlanetSize);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetSpeed(Planet.Speed);
     }

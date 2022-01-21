@@ -13,9 +13,10 @@ public class PlanetStarEditor : Editor {
         base.OnInspectorGUI();
 
         Planet.SetSeed(Planet.SurfaceSeed, Planet.FlaresSeed, Planet.EmissionSeed);
+        Planet.SetGravity(Planet.GravitySize);
         Planet.SetColors(Planet.SurfaceColor, Planet.FlaresColor, Planet.EmissionColor);
         Planet.SetPixels(Planet.Pixels);
-        Planet.SetSize(Planet.Size);
+        Planet.SetSize(Planet.PlanetSize);
         Planet.SetRotate(Planet.Rotation);
         Planet.SetSpeed(Planet.Speed);
     }

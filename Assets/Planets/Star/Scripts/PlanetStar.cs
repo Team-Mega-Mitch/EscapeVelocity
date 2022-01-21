@@ -3,7 +3,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PlanetStar : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
-    [Range(0f, 5f)] public float Size = 1.0f;
+    [Range(0f, 5f)] public float PlanetSize = 1f;
+    [Range(1f, 5f)] public float GravitySize = 2f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
     [Range(-1f, 1f)] public float Speed = 0.5f;
 
@@ -23,6 +24,7 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
     private PlanetLayer _Surface;
     private PlanetLayer _Flares;
     private PlanetLayer _Emission;
+    private PlanetLayer _Gravity;
 
     private float _Timestamp = 0f;
 
@@ -30,9 +32,10 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
         Initialize();
 
         SetSeed(SurfaceSeed, FlaresSeed, EmissionSeed);
+        SetGravity(GravitySize);
         SetColors(SurfaceColor, FlaresColor, EmissionColor);
         SetPixels(Pixels);
-        SetSize(Size);
+        SetSize(PlanetSize);
         SetRotate(Rotation);
         SetSpeed(Speed);
     }
@@ -41,14 +44,17 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
         SpriteRenderer surfaceRenderer = transform.Find("Surface").GetComponent<SpriteRenderer>();
         SpriteRenderer flaresRenderer = transform.Find("Flares").GetComponent<SpriteRenderer>();
         SpriteRenderer emissionRenderer = transform.Find("Emission").GetComponent<SpriteRenderer>();
+        SpriteRenderer gravityRenderer = transform.Find("Gravity").GetComponent<SpriteRenderer>();
 
         Material surfaceMaterial = new Material(surfaceRenderer.sharedMaterial);
         Material flaresMaterial = new Material(flaresRenderer.sharedMaterial);
         Material emissionMaterial = new Material(emissionRenderer.sharedMaterial);
+        Material gravityMaterial = new Material(gravityRenderer.sharedMaterial);
 
         _Surface = new PlanetLayer(gameObject, surfaceRenderer, surfaceMaterial);
         _Flares = new PlanetLayer(gameObject, flaresRenderer, flaresMaterial);
         _Emission = new PlanetLayer(gameObject, emissionRenderer, emissionMaterial);
+        _Gravity = new PlanetLayer(gameObject, gravityRenderer, gravityMaterial);
     }
 
     public void SetSeed(int surfaceSeed, int flaresSeed, int emissionSeed) {
@@ -61,10 +67,18 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
         EmissionSeed = emissionSeed;
     }
 
+    public void SetGravity(float size) {
+        Transform gravity = transform.Find("Gravity");
+        gravity.transform.localScale = new Vector3(size, size, gravity.transform.localScale.z);
+
+        GravitySize = size;
+    }
+
     public void SetPixels(float ppu) {
         _Surface.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         _Emission.SetMaterialProperty(ShaderProperties.Pixels, ppu * 2);
         _Flares.SetMaterialProperty(ShaderProperties.Pixels, ppu * 2);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, ppu * GravitySize);
 
         Pixels = (int)ppu;
     }
@@ -84,8 +98,9 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
         _Surface.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
         _Emission.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels * 2);
         _Flares.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels * 2);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, size * GravitySize * Pixels);
 
-        Size = size;
+        PlanetSize = size;
     }
 
     public void SetSpeed(float speed) {

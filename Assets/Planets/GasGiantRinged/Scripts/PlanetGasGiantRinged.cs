@@ -3,7 +3,8 @@
 [ExecuteInEditMode]
 public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
-    [Range(0f, 2f)] public float Size = 1.0f;
+    [Range(0f, 2f)] public float PlanetSize = 1f;
+    [Range(1f, 5f)] public float GravitySize = 2f;
     [Range(0f, 6.28f)] public float PlanetRotation = 0f;
     [Range(0f, 6.28f)] public float RingRotation = 0f;
     [Range(-1f, 1f)] public float PlanetSpeed = 0.5f;
@@ -24,6 +25,7 @@ public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
 
     private PlanetLayer _Planet;
     private PlanetLayer _Ring;
+    private PlanetLayer _Gravity;
 
     private float _Timestamp = 0f;
 
@@ -31,9 +33,10 @@ public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
         Initialize();
 
         SetSeed(PlanetSeed, RingSeed);
+        SetGravity(GravitySize);
         SetColors(PlanetColor, RingColor);
         SetPixels(Pixels);
-        SetSize(Size);
+        SetSize(PlanetSize);
         SetRotate(PlanetRotation, RingRotation);
         SetLight(LightOrigin);
         SetSpeed(PlanetSpeed, RingSpeed);
@@ -43,12 +46,15 @@ public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
     public void Initialize() {
         SpriteRenderer planetRenderer = transform.Find("Planet").GetComponent<SpriteRenderer>();
         SpriteRenderer ringRenderer = transform.Find("Ring").GetComponent<SpriteRenderer>();
+        SpriteRenderer gravityRenderer = transform.Find("Gravity").GetComponent<SpriteRenderer>();
 
         Material planetMaterial = new Material(planetRenderer.sharedMaterial);
         Material ringMaterial = new Material(ringRenderer.sharedMaterial);
+        Material gravityMaterial = new Material(gravityRenderer.sharedMaterial);
 
         _Planet = new PlanetLayer(gameObject, planetRenderer, planetMaterial);
         _Ring = new PlanetLayer(gameObject, ringRenderer, ringMaterial);
+        _Gravity = new PlanetLayer(gameObject, gravityRenderer, gravityMaterial);
     }
 
     public void SetSeed(int planetSeed, int ringSeed) {
@@ -59,9 +65,17 @@ public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
         RingSeed = ringSeed;
     }
 
+    public void SetGravity(float size) {
+        Transform gravity = transform.Find("Gravity");
+        gravity.transform.localScale = new Vector3(size, size, gravity.transform.localScale.z);
+
+        GravitySize = size;
+    }
+
     public void SetPixels(float ppu) {
         _Planet.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         _Ring.SetMaterialProperty(ShaderProperties.Pixels, ppu * 3f);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, ppu * GravitySize);
 
         Pixels = (int)ppu;
     }
@@ -87,8 +101,9 @@ public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
         // Scale for pixel size, without tampering "pixels" property
         _Planet.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
         _Ring.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels * 3f);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, size * GravitySize * Pixels);
 
-        Size = size;
+        PlanetSize = size;
     }
 
     public void SetSpeed(float planetSpeed, float ringSpeed) {

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class PlanetIcelands : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
-    [Range(0f, 2f)] public float Size = 1.0f;
+    [Range(0f, 2f)] public float PlanetSize = 1f;
+    [Range(1f, 5f)] public float GravitySize = 2f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
     [Range(-1f, 1f)] public float PlanetSpeed = 0.5f;
     [Range(-1f, 1f)] public float CloudSpeed = 0.5f;
@@ -30,6 +31,7 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface {
     private PlanetLayer _Water;
     private PlanetLayer _Clouds;
     private PlanetLayer _Atmosphere;
+    private PlanetLayer _Gravity;
 
     private float _Timestamp = 0f;
 
@@ -39,9 +41,10 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface {
         SetSeed(LandSeed, WaterSeed, CloudsSeed);
         SetWaterFlow(WaterFlow);
         SetCloudCover(CloudCover);
+        SetGravity(GravitySize);
         SetColors(LandColor, WaterColor, CloudsColor, AtmosphereColor);
         SetPixels(Pixels);
-        SetSize(Size);
+        SetSize(PlanetSize);
         SetRotate(Rotation);
         SetLight(LightOrigin);
         SetSpeed(PlanetSpeed, CloudSpeed);
@@ -52,16 +55,19 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface {
         SpriteRenderer waterRenderer = transform.Find("Water").GetComponent<SpriteRenderer>();
         SpriteRenderer cloudsRenderer = transform.Find("Clouds").GetComponent<SpriteRenderer>();
         SpriteRenderer atmosphereRenderer = transform.Find("Atmosphere").GetComponent<SpriteRenderer>();
+        SpriteRenderer gravityRenderer = transform.Find("Gravity").GetComponent<SpriteRenderer>();
 
         Material landMaterial = new Material(landRenderer.sharedMaterial);
         Material waterMaterial = new Material(waterRenderer.sharedMaterial);
         Material cloudsMaterial = new Material(cloudsRenderer.sharedMaterial);
         Material atmosphereMaterial = new Material(atmosphereRenderer.sharedMaterial);
+        Material gravityMaterial = new Material(gravityRenderer.sharedMaterial);
 
         _Land = new PlanetLayer(gameObject, landRenderer, landMaterial);
         _Water = new PlanetLayer(gameObject, waterRenderer, waterMaterial);
         _Clouds = new PlanetLayer(gameObject, cloudsRenderer, cloudsMaterial);
         _Atmosphere = new PlanetLayer(gameObject, atmosphereRenderer, atmosphereMaterial);
+        _Gravity = new PlanetLayer(gameObject, gravityRenderer, gravityMaterial);
     }
 
     public void SetSeed(int landSeed, int waterSeed, int cloudsSeed) {
@@ -72,6 +78,13 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface {
         LandSeed = landSeed;
         WaterSeed = waterSeed;
         CloudsSeed = cloudsSeed;
+    }
+
+    public void SetGravity(float size) {
+        Transform gravity = transform.Find("Gravity");
+        gravity.transform.localScale = new Vector3(size, size, gravity.transform.localScale.z);
+
+        GravitySize = size;
     }
 
     public void SetWaterFlow(float amount) {
@@ -91,6 +104,7 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface {
         _Water.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         _Clouds.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         _Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, ppu * GravitySize);
 
         Pixels = (int)ppu;
     }
@@ -120,8 +134,9 @@ public class PlanetIcelands : MonoBehaviour, PlanetInterface {
         _Water.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
         _Clouds.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
         _Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, size * GravitySize * Pixels);
 
-        Size = size;
+        PlanetSize = size;
     }
 
     public void SetSpeed(float planetSpeed, float cloudSpeed) {

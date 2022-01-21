@@ -24,10 +24,6 @@ public class Spawner : MonoBehaviour {
 
     private void Start() {
         GenerateChunks();
-
-        foreach (KeyValuePair<Vector2, int> chunk in _TrackedChunks) {
-            Debug.Log(chunk.Key + ": " + chunk.Value);
-        }
     }
 
     private void UpdateChunks(Vector2 direction) {
@@ -153,7 +149,8 @@ public class Spawner : MonoBehaviour {
                     int index = Random.Range(0, planetSelection.Length - 1);
                     GameObject planet = Instantiate(planetSelection[index], location, Quaternion.identity);
 
-                    planet.GetComponent<CircleCollider2D>().radius *= Padding;
+                    // planet.GetComponent<CircleCollider2D>().radius *= Padding;
+                    AddPadding(planet);
                     planet.GetComponent<PlanetInterface>().SetSize(size);
                     planet.transform.parent = chunk.transform;
 
@@ -164,6 +161,15 @@ public class Spawner : MonoBehaviour {
 
         Seeder.SetSeed(GetComponent<Seeder>().Seed);
         Random.state = currentState;
+    }
+
+    private void AddPadding(GameObject planet) {
+        GameObject padding = new GameObject("Padding", typeof(CircleCollider2D));
+
+        padding.transform.position = planet.transform.position;
+        padding.GetComponent<CircleCollider2D>().radius = planet.transform.Find("Gravity").GetComponent<CircleCollider2D>().radius * Padding;
+
+        padding.transform.parent = planet.transform;
     }
 
     private Vector2 GetRandomLocationInChunk(GameObject chunk) {
@@ -205,7 +211,6 @@ public class Spawner : MonoBehaviour {
 
     private int GenRandomNumber() {
         int num = Random.Range(100000000, 999999999);
-        Debug.Log(num);
 
         return Random.Range(100000000, 999999999);
     }

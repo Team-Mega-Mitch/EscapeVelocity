@@ -3,7 +3,8 @@
 [ExecuteInEditMode]
 public class PlanetDeserts : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
-    [Range(0f, 2f)] public float Size = 1.0f;
+    [Range(0f, 2f)] public float PlanetSize = 1f;
+    [Range(1f, 5f)] public float GravitySize = 2f;
     [Range(0f, 6.28f)] public float Rotation = 0f;
     [Range(-1f, 1f)] public float Speed = 0.5f;
 
@@ -20,6 +21,7 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface {
 
     private PlanetLayer _Surface;
     private PlanetLayer _Atmosphere;
+    private PlanetLayer _Gravity;
 
     private float _Timestamp = 0f;
 
@@ -27,9 +29,10 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface {
         Initialize();
 
         SetSeed(SurfaceSeed);
+        SetGravity(GravitySize);
         SetColors(SurfaceColor, AtmosphereColor);
         SetPixels(Pixels);
-        SetSize(Size);
+        SetSize(PlanetSize);
         SetRotate(Rotation);
         SetLight(LightOrigin);
         SetSpeed(Speed);
@@ -38,12 +41,15 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface {
     public void Initialize() {
         SpriteRenderer surfaceRenderer = transform.Find("Surface").GetComponent<SpriteRenderer>();
         SpriteRenderer atmosphereRenderer = transform.Find("Atmosphere").GetComponent<SpriteRenderer>();
+        SpriteRenderer gravityRenderer = transform.Find("Gravity").GetComponent<SpriteRenderer>();
 
         Material surfaceMaterial = new Material(surfaceRenderer.sharedMaterial);
         Material atmosphereMaterial = new Material(atmosphereRenderer.sharedMaterial);
+        Material gravityMaterial = new Material(gravityRenderer.sharedMaterial);
 
         _Surface = new PlanetLayer(gameObject, surfaceRenderer, surfaceMaterial);
         _Atmosphere = new PlanetLayer(gameObject, atmosphereRenderer, atmosphereMaterial);
+        _Gravity = new PlanetLayer(gameObject, gravityRenderer, gravityMaterial);
     }
 
     public void SetSeed(int seed) {
@@ -52,9 +58,17 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface {
         SurfaceSeed = seed;
     }
 
+    public void SetGravity(float size) {
+        Transform gravity = transform.Find("Gravity");
+        gravity.transform.localScale = new Vector3(size, size, gravity.transform.localScale.z);
+
+        GravitySize = size;
+    }
+
     public void SetPixels(float ppu) {
         _Surface.SetMaterialProperty(ShaderProperties.Pixels, ppu);
         _Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, ppu);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, ppu * GravitySize);
 
         Pixels = (int)ppu;
     }
@@ -78,8 +92,9 @@ public class PlanetDeserts : MonoBehaviour, PlanetInterface {
         // Scale for pixel size, without tampering "pixels" property
         _Surface.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
         _Atmosphere.SetMaterialProperty(ShaderProperties.Pixels, size * Pixels);
+        _Gravity.SetMaterialProperty(ShaderProperties.Pixels, size * GravitySize * Pixels);
 
-        Size = size;
+        PlanetSize = size;
     }
 
     public void SetSpeed(float speed) {
