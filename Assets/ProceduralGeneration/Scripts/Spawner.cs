@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour {
     [Header("Chunking")]
+    public GameObject Follower;
     public bool PreviewChunkGrid = true;
     public Vector2Int ChunkGrid;
     [Range(10, 100)] public int ChunkSize;
@@ -215,6 +216,7 @@ public class Spawner : MonoBehaviour {
     }
 
     private void Update() {
+        transform.position = Follower.transform.position;
         Vector2Int chunkDirection = GetNewChunkDirection();
 
         if (chunkDirection != Vector2Int.zero) {

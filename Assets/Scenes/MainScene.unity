@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227c367df44ae614fb88bc54dd312c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Follower: {fileID: 326257183}
   PreviewChunkGrid: 1
   ChunkGrid: {x: 3, y: 2}
   ChunkSize: 100
@@ -263,6 +264,7 @@ GameObject:
   - component: {fileID: 326257184}
   - component: {fileID: 326257186}
   - component: {fileID: 326257187}
+  - component: {fileID: 326257188}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -309,13 +311,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 253871f5557e64b4dacb1135099556ae, type: 3}
+  m_SortingOrder: 100
+  m_Sprite: {fileID: -2982264937083359067, guid: 551608da11ad6024aa16499c958bfa70, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.75, y: 1.75}
+  m_Size: {x: 0.375, y: 0.75}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -330,7 +332,7 @@ Transform:
   m_GameObject: {fileID: 326257183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -368,8 +370,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132294239e9b31347ad41d67b43e1728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theRB: {fileID: 326257186}
-  moveSpeed: 8
+  rigidBody: {fileID: 326257186}
+  mouseSpeed: 20
+  minThrust: 1
+  maxThrust: 5
+--- !u!95 &326257188
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326257183}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5986c174a41aa2248a2d2e8dab4298df, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &374383815
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +406,8 @@ GameObject:
   - component: {fileID: 374383816}
   - component: {fileID: 374383819}
   - component: {fileID: 374383820}
+  - component: {fileID: 374383821}
+  - component: {fileID: 374383822}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -408,7 +433,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -508,3 +533,37 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &374383821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374383815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600e1e8654f33ba4592ca7fc5873ee58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 326257185}
+  offset: {x: 0, y: 0, z: -3}
+  smoothSpeed: 0.125
+--- !u!95 &374383822
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374383815}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5986c174a41aa2248a2d2e8dab4298df, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

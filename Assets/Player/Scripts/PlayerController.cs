@@ -6,9 +6,11 @@ public class PlayerController : MonoBehaviour {
 
     public Rigidbody2D rigidBody;
     public float mouseSpeed;
-    public float mapSpeed;
+    public float minThrust;
+    public float maxThrust;
 
     private Camera camera;
+    private float thrust = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -29,6 +31,23 @@ public class PlayerController : MonoBehaviour {
         float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
 
-        transform.Translate(new Vector3(0, 1, 0) * mapSpeed * Time.deltaTime);
+        float speed = minThrust + thrust;
+
+        transform.Translate(new Vector3(0, 1, 0) * speed * Time.deltaTime);
     }
+
+    void FixedUpdate() {
+        if (Input.GetKey(KeyCode.Space)) {
+            if (thrust != maxThrust) {
+                thrust = Mathf.Clamp(thrust + .05f, 0, maxThrust);
+            }
+        } else if (thrust != 0) {
+            thrust = Mathf.Clamp(thrust - .05f, 0, maxThrust);
+        }
+        Debug.Log("thrust: " + thrust);
+    }
+
+    // private void thrust() {
+    //     thrust = 1;
+    // }
 }
