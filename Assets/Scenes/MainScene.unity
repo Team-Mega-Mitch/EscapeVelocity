@@ -157,8 +157,8 @@ MonoBehaviour:
   ChunkGrid: {x: 3, y: 2}
   ChunkSize: 100
   Amount: 50
-  Padding: 5
-  Sampling: 1
+  Padding: 9
+  Sampling: 30
   SizeDistribution:
     serializedVersion: 2
     m_Curve:
@@ -358,6 +358,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
