@@ -5,23 +5,26 @@ using UnityEngine.UI;
 
 public class HIGHSCORES : MonoBehaviour
 {
-    private Transform entryContainer;
-    private Transform entryTemplate;
+    public Transform player;
+    public Text score;
+    public Text HighScoreText;
 
-    private void Awake()
+    void Start()
     {
-        entryContainer = transform.Find("HIGHSCORE_CONTAINER");
-        entryTemplate = entryContainer.Find("HIGHSCORE_TRACKER");
-
-        entryTemplate.gameObject.SetActive(false);
-        
-        float templateHeight = 20f;
-        for (int i = 0; i < 10; i++)
-        {
-            Transform entryTransform = Instantiate(entryTemplate, entryContainer);
-            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-            entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight*i);
-            entryTransform.gameObject.SetActive(true);
-        }
+        HighScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
     }
+
+    public void HighScore ()
+
+    {
+        if (player.position.y > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            int PlayPos = (int) player.position.y;
+            PlayerPrefs.SetInt("HighScore", PlayPos);
+            HighScoreText.text = player.position.y.ToString();
+        }
+        
+    }
+
+
 }
