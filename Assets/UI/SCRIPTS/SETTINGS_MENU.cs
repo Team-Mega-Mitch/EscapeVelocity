@@ -9,6 +9,7 @@ public class SETTINGS_MENU : MonoBehaviour
     public void SetVolume (float volume)
     {
         audioMixer.SetFloat("MASTER_VOLUME", volume);
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioController>().SetVolume(volume * .1f);
     }
 
     public void SetQuality (int qualityIndex)

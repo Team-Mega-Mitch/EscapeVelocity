@@ -36,4 +36,8 @@ public class AudioController : MonoBehaviour
             trackOrder.Add(rand);
         }
     }
+
+    public void SetVolume(float level) {
+        audioSource.volume = level;
+    }
 }
