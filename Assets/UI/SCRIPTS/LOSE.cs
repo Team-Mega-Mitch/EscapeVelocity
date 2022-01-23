@@ -14,6 +14,8 @@ public class LOSE : MonoBehaviour
     public void PlayAgain()
 
     {
-        SceneManager.LoadScene("MainScene");
+        //SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        Debug.Log("play again");
     }
 }
