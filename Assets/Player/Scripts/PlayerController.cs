@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
     private Animator animator;
 
 
+
     public float thrust_multiplier = .01f;
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
         mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) {
             if (thrust != maxThrust) {
@@ -55,6 +57,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioController>().PlayMusic();
+
+        float velocity = (minThrust + thrust + GravityBoost());
+        Vector3 distance = new Vector3(0, 1, 0) * (minThrust + thrust + GravityBoost()) * Time.fixedDeltaTime;
         if (_Planet != null) {
             rigidBody.AddForce(directionOfPlayerFromPlanet * GravityPull());
         } else {
