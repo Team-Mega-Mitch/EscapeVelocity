@@ -5,9 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public Rigidbody2D rigidBody;
+<<<<<<< HEAD
     public float mouseSpeed;
     public float mapSpeed;
+=======
+    public float movementSpeed;
+    public float minThrust;
+    public float maxThrust;
+>>>>>>> Clamping movement;
 
+    private Vector2 mousePos;
     private Camera camera;
 
     // Start is called before the first frame update
@@ -20,9 +27,9 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        rigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * mouseSpeed;
-        Vector3 mouse = Input.mousePosition;
+        mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
 
+<<<<<<< HEAD
         Vector3 screenPoint = camera.WorldToScreenPoint(transform.localPosition);
         Vector2 offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
 
@@ -31,4 +38,28 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(new Vector3(0, 1, 0) * mapSpeed * Time.deltaTime);
     }
+=======
+        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) {
+            if (thrust != maxThrust) {
+                thrust = Mathf.Clamp(thrust + .05f, 0, maxThrust);
+            }
+        } else if (thrust != 0) {
+            thrust = Mathf.Clamp(thrust - .05f, 0, maxThrust);
+        }
+    }
+
+    void FixedUpdate() {
+        transform.Translate(new Vector3(0, 1, 0) * (minThrust + thrust) * Time.fixedDeltaTime);
+
+        Vector2 lookDir = mousePos - rigidBody.position;
+        float angle = Mathf.Atan2(movementSpeed, lookDir.x) * Mathf.Rad2Deg - 90f;
+        if (angle < -180) {
+            angle = 90;
+        } else if (angle < -90) {
+            angle = -90;
+        }
+
+        rigidBody.rotation = angle;
+    }
+>>>>>>> Clamping movement;
 }
