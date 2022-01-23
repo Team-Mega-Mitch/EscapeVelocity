@@ -378,8 +378,8 @@ MonoBehaviour:
   movementSpeed: 15
   minThrust: 1
   maxThrust: 3
-  GravityBoostConstant: 2
-  GravityPullConstant: 8
+  GravityBoostConstant: 0
+  GravityPullConstant: 0
   thrust_multiplier: 0.01
 --- !u!95 &326257188
 Animator:
@@ -412,6 +412,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebda989c50e1ba49afa965393e73603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 326257188}
+  stopSpeed: {fileID: 326257187}
+  player: {fileID: 0}
 --- !u!114 &326257191
 MonoBehaviour:
   m_ObjectHideFlags: 0
