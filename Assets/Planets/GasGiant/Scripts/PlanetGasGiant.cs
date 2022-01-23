@@ -125,6 +125,10 @@ public class PlanetGasGiant : MonoBehaviour, PlanetInterface {
         PlanetSize = size;
     }
 
+    public float GetSize() {
+        return PlanetSize;
+    }
+
     public void SetSpeed(float speed) {
         _Surface.SetMaterialProperty(ShaderProperties.Speed, speed);
         _Clouds1.SetMaterialProperty(ShaderProperties.Speed, speed);

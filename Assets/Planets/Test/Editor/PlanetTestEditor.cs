@@ -13,6 +13,6 @@ public class PlanetTestEditor : Editor {
         base.OnInspectorGUI();
 
         Planet.SetColors(Planet.Color);
-        Planet.SetSize(Planet.Size);
+        Planet.SetSize(Planet.PlanetSize);
     }
 }

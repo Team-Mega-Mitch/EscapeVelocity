@@ -92,6 +92,10 @@ public class PlanetBlackHole : MonoBehaviour, PlanetInterface {
         PlanetSize = size;
     }
 
+    public float GetSize() {
+        return PlanetSize;
+    }
+
     public void SetSpeed(float speed) {
         _Disk.SetMaterialProperty(ShaderProperties.Speed, Speed);
 

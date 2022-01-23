@@ -139,6 +139,10 @@ public class PlanetContinents : MonoBehaviour, PlanetInterface {
         PlanetSize = size;
     }
 
+    public float GetSize() {
+        return PlanetSize;
+    }
+
     public void SetSpeed(float planetSpeed, float cloudSpeed) {
         _Land.SetMaterialProperty(ShaderProperties.Speed, planetSpeed);
         _Water.SetMaterialProperty(ShaderProperties.Speed, planetSpeed);

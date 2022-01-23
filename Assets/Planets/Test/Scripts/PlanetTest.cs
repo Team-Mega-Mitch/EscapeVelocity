@@ -3,7 +3,7 @@
 [ExecuteInEditMode]
 public class PlanetTest : MonoBehaviour, PlanetInterface {
     [Header("Transform")]
-    [Range(0f, 2f)] public float Size = 1.0f;
+    [Range(0f, 2f)] public float PlanetSize = 1.0f;
 
     [Header("Colors")]
     public Color Color = new Color(1, 0, 0, 1);
@@ -14,7 +14,7 @@ public class PlanetTest : MonoBehaviour, PlanetInterface {
         Initialize();
 
         SetColors(Color);
-        SetSize(Size);
+        SetSize(PlanetSize);
     }
 
     public void Initialize() {
@@ -28,7 +28,11 @@ public class PlanetTest : MonoBehaviour, PlanetInterface {
     public void SetSize(float size) {
         transform.localScale = new Vector3(size, size, transform.localScale.z);
 
-        Size = size;
+        PlanetSize = size;
+    }
+
+    public float GetSize() {
+        return PlanetSize;
     }
 
     public void SetColors(Color color) {
