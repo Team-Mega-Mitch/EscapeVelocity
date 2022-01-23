@@ -165,7 +165,9 @@ public class Spawner : MonoBehaviour {
     private void AddPadding(GameObject planet) {
         GameObject padding = new GameObject("Padding", typeof(CircleCollider2D));
 
+
         padding.transform.position = planet.transform.position;
+        padding.GetComponent<CircleCollider2D>().isTrigger = true;
         padding.GetComponent<CircleCollider2D>().radius = planet.transform.Find("Gravity").GetComponent<CircleCollider2D>().radius * Padding;
 
         padding.transform.parent = planet.transform;
