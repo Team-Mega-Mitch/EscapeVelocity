@@ -373,9 +373,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 326257186}
-  movementSpeed: 15
+  movementSpeed: 20
   minThrust: 1
-  maxThrust: 3
+  maxThrust: 7
+  GravityBoostConstant: 25
+  GravityPullConstant: 0.5
   thrust_multiplier: 0.01
 --- !u!95 &326257188
 Animator:
