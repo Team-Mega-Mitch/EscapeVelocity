@@ -6,6 +6,6 @@ using UnityEngine.SceneManagement;
 public class WinLose : MonoBehaviour
 {
     public void LoseLevel() {
-        SceneManager.LoadScene("LoseScreen");
+        SceneManager.LoadScene("GameOver");
     }
 }
