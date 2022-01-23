@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 6460660643647822174}
   - component: {fileID: 998875875206077155}
   - component: {fileID: 6460660643647822175}
+  - component: {fileID: 2972413245794114124}
   m_Layer: 0
   m_Name: PlanetStar
   m_TagString: Untagged
@@ -333,17 +334,17 @@ MonoBehaviour:
   Speed: 0.2
   SurfaceColor:
     serializedVersion: 2
-    key0: {r: 0.9607843, g: 1, b: 0.9098039, a: 1}
-    key1: {r: 0.46666667, g: 0.8392157, b: 0.75686276, a: 1}
-    key2: {r: 0.10980392, g: 0.57254905, b: 0.654902, a: 0.47058824}
+    key0: {r: 0.9164, g: 1, b: 0.81, a: 1}
+    key1: {r: 0, g: 0.09618035, b: 0.628, a: 1}
+    key2: {r: 0.011764706, g: 0.24313726, b: 0.36862746, a: 0.47058824}
     key3: {r: 0.011764706, g: 0.24313726, b: 0.36862746, a: 0.47058824}
     key4: {r: 0.011764706, g: 0.24313726, b: 0.36862746, a: 0.47058824}
     key5: {r: 0.70980394, g: 0.35686275, b: 0.44313726, a: 0.47058824}
     key6: {r: 0.70980394, g: 0.35686275, b: 0.44313726, a: 0.47058824}
     key7: {r: 0.70980394, g: 0.35686275, b: 0.44313726, a: 0.47058824}
     ctime0: 0
-    ctime1: 21823
-    ctime2: 43646
+    ctime1: 65535
+    ctime2: 65535
     ctime3: 65535
     ctime4: 65535
     ctime5: 0
@@ -358,7 +359,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 4
+    m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   FlaresColor:
     serializedVersion: 2
@@ -389,11 +390,119 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  EmissionColor: {r: 0.9882353, g: 0.99607843, b: 0.8901961, a: 1}
+  EmissionColor: {r: 0.9975542, g: 1, b: 0.9669811, a: 1}
   SurfaceSeed: 1
   FlaresSeed: 1
   EmissionSeed: 1
   Pixels: 108
+--- !u!114 &2972413245794114124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460660643647822173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe413c226475ea42889ed90590f30b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Speed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CloudCover:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  WaterFlow:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6460660644299959778
 GameObject:
   m_ObjectHideFlags: 0
