@@ -103,6 +103,10 @@ public class PlanetStar : MonoBehaviour, PlanetInterface {
         PlanetSize = size;
     }
 
+    public float GetSize() {
+        return PlanetSize;
+    }
+
     public void SetSpeed(float speed) {
         _Surface.SetMaterialProperty(ShaderProperties.Speed, speed);
         _Flares.SetMaterialProperty(ShaderProperties.Speed, speed * 0.5f);

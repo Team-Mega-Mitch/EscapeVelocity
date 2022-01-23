@@ -1,3 +1,4 @@
 public interface PlanetInterface {
     void SetSize(float size);
+    float GetSize();
 }

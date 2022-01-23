@@ -106,6 +106,10 @@ public class PlanetGasGiantRinged : MonoBehaviour, PlanetInterface {
         PlanetSize = size;
     }
 
+    public float GetSize() {
+        return PlanetSize;
+    }
+
     public void SetSpeed(float planetSpeed, float ringSpeed) {
         _Planet.SetMaterialProperty(ShaderProperties.Speed, planetSpeed);
         _Ring.SetMaterialProperty(ShaderProperties.Speed, ringSpeed);

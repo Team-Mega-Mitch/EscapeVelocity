@@ -42,7 +42,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -311,7 +311,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -426,7 +426,7 @@ MonoBehaviour:
   WaterSeed: 1
   CloudsSeed: 1
   LightOrigin: {x: 0.3, y: 0.7}
-  Pixels: 128
+  Pixels: 108
   CloudCover: 0.5
   WaterFlow: 0.55
 --- !u!114 &7990548154765400792

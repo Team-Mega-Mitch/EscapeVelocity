@@ -131,6 +131,10 @@ public class PlanetVolcanoes : MonoBehaviour, PlanetInterface {
         PlanetSize = size;
     }
 
+    public float GetSize() {
+        return PlanetSize;
+    }
+
     public void SetSpeed(float speed) {
         _Land.SetMaterialProperty(ShaderProperties.Speed, speed);
         _Craters.SetMaterialProperty(ShaderProperties.Speed, speed);
