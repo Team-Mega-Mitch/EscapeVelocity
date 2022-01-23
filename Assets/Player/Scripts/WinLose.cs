@@ -7,8 +7,6 @@ public class WinLose : MonoBehaviour
 {
     public Animator animator;
     public PlayerController stopSpeed;
-    public GameObject player;
-
     
     public IEnumerator CallEndScene() {
         yield return new WaitForSeconds(1f);
@@ -21,6 +19,8 @@ public class WinLose : MonoBehaviour
        stopSpeed.movementSpeed = 0f;
        stopSpeed.minThrust = 0f;
        stopSpeed.maxThrust = 0f;
+       stopSpeed.GravityBoostConstant = 0f;
+       stopSpeed.GravityPullConstant = 0f;
        StartCoroutine(CallEndScene());
     }
 }
