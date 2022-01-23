@@ -124,7 +124,7 @@ Material:
     - _OcclusionStrength: 1
     - _Octaves: 14.3
     - _Parallax: 0.005
-    - _Pixels: 384
+    - _Pixels: 324
     - _PlanetScaleRatio: 6
     - _QueueOffset: 0
     - _ReceiveShadows: 1

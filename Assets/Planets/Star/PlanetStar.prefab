@@ -393,7 +393,7 @@ MonoBehaviour:
   SurfaceSeed: 1
   FlaresSeed: 1
   EmissionSeed: 1
-  Pixels: 128
+  Pixels: 108
 --- !u!1 &6460660644299959778
 GameObject:
   m_ObjectHideFlags: 0

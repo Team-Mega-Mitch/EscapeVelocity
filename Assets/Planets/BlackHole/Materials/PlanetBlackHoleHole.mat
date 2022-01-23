@@ -108,7 +108,7 @@ Material:
     - _OCTAVES: 5
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Pixels: 128
+    - _Pixels: 108
     - _QueueOffset: 0
     - _Radius: 0.248
     - _ReceiveShadows: 1

@@ -41,7 +41,7 @@ Material:
     - _InnerRadius: 0.3
     - _LightZone: 1.68
     - _OuterRadius: 0.5
-    - _Pixels: 256
+    - _Pixels: 216
     - _Power: 7.43
     - _Radius: 1
     - _RimWidth: 3

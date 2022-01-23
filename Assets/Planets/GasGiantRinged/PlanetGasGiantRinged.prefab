@@ -312,7 +312,7 @@ MonoBehaviour:
   RingSeed: 1
   RingEnabled: 1
   LightOrigin: {x: 0, y: 0.7}
-  Pixels: 128
+  Pixels: 108
 --- !u!1 &6834058514292936240
 GameObject:
   m_ObjectHideFlags: 0

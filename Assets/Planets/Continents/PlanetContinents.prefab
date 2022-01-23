@@ -425,7 +425,7 @@ MonoBehaviour:
   WaterSeed: 1
   CloudsSeed: 1
   LightOrigin: {x: 0.3, y: 0.7}
-  Pixels: 128
+  Pixels: 108
   CloudCover: 0.5
   WaterFlow: 0.55
 --- !u!1 &450546460664081474

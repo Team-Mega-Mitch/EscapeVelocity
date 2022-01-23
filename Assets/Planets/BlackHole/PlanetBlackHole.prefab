@@ -109,7 +109,7 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   DiskSeed: 1
-  Pixels: 128
+  Pixels: 108
 --- !u!1 &4638428435020367824
 GameObject:
   m_ObjectHideFlags: 0

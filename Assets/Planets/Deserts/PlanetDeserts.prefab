@@ -198,7 +198,7 @@ MonoBehaviour:
   AtmosphereColor: {r: 0.3882353, g: 0.22745098, b: 0.13725491, a: 1}
   SurfaceSeed: 1
   LightOrigin: {x: 0.3, y: 0.7}
-  Pixels: 128
+  Pixels: 108
 --- !u!1 &1058628716368716286
 GameObject:
   m_ObjectHideFlags: 0

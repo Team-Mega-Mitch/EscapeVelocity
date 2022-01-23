@@ -244,7 +244,7 @@ MonoBehaviour:
   LavaSeed: 1
   CratersEnabled: 1
   LightOrigin: {x: 0.3, y: 0.7}
-  Pixels: 128
+  Pixels: 108
   LavaFlow: 0.4
 --- !u!1 &4273795969101719767
 GameObject:
