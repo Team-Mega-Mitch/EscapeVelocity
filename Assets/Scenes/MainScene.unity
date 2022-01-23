@@ -153,12 +153,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227c367df44ae614fb88bc54dd312c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Follow: {fileID: 0}
   PreviewChunkGrid: 1
   ChunkGrid: {x: 3, y: 2}
   ChunkSize: 100
   Amount: 50
   Padding: 9
   Sampling: 30
+  SafeZone: 0
   SizeDistribution:
     serializedVersion: 2
     m_Curve:
@@ -376,8 +378,8 @@ MonoBehaviour:
   movementSpeed: 15
   minThrust: 1
   maxThrust: 3
-  GravityBoostConstant: 0
-  GravityPullConstant: 0
+  GravityBoostConstant: 2
+  GravityPullConstant: 8
   thrust_multiplier: 0.01
 --- !u!95 &326257188
 Animator:
@@ -1411,6 +1413,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 326257185}
   scoreText: {fileID: 1519915519}
+  scoreValue: 0
+  HighScoreText: {fileID: 0}
 --- !u!114 &1519915519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1752,6 +1756,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   scoreText: {fileID: 0}
+  scoreValue: 0
+  HighScoreText: {fileID: 0}
 --- !u!1 &2009460534
 GameObject:
   m_ObjectHideFlags: 0
@@ -2033,6 +2039,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   scoreText: {fileID: 0}
+  scoreValue: 0
+  HighScoreText: {fileID: 0}
 --- !u!1 &2078754109
 GameObject:
   m_ObjectHideFlags: 0

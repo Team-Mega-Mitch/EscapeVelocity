@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour {
     public float movementSpeed;
     public float minThrust;
     public float maxThrust;
-    public float GravityBoostConstant;
-    public float GravityPullConstant;
+    public float GravityBoostConstant = 2f;
+    public float GravityPullConstant = 2f;
 
     private float thrust;
+    private Vector3 distance;
+    private Vector3 directionOfPlayerFromPlanet;
     private Vector2 mousePos;
     private Camera camera;
     private GameObject _Planet;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     void Start() {
         camera = Camera.main;
 
+        directionOfPlayerFromPlanet = Vector3.zero;
         //Set Cursor to not be visible
         Cursor.visible = false;
     }
@@ -36,36 +39,40 @@ public class PlayerController : MonoBehaviour {
         } else if (thrust != 0) {
             thrust = Mathf.Clamp(thrust - thrust_multiplier, 0, maxThrust);
         }
+
+        float velocity = (minThrust + thrust + GravityBoost());
+        distance = new Vector3(0, 1, 0) * velocity * Time.fixedDeltaTime;
+
+        if (_Planet != null) {
+            directionOfPlayerFromPlanet = (_Planet.transform.position - transform.position).normalized;
+        } else {
+            directionOfPlayerFromPlanet = Vector3.zero;
+        }
     }
 
     void FixedUpdate() {
-        float velocity = (minThrust + thrust + GravityBoost());
-        Vector3 distance = new Vector3(0, 1, 0) * (minThrust + thrust + GravityBoost()) * Time.fixedDeltaTime;
-        
-        // if(_Planet) {
-        //     Vector2 displacement = _Planet.transform.position - transform.position;
-        //     float theta = Mathf.Atan(displacement.y / displacement.x);
-
-        //     Vector3 gravityPull = new Vector3(Mathf.Sin(theta), Mathf.Cos(theta), 0);
-        //     gravityPull *= GravityPull(velocity, theta);
-        //     distance += gravityPull;
-        // }
+        if (_Planet != null) {
+            rigidBody.AddForce(directionOfPlayerFromPlanet * GravityPull());
+        } else {
+            rigidBody.velocity = Vector3.zero;
+            rigidBody.angularVelocity = 0f;
+        }
 
         transform.Translate(distance);
 
         Vector2 lookDir = mousePos - rigidBody.position;
-        float angle = Mathf.Atan2(movementSpeed, lookDir.x) * Mathf.Rad2Deg - 90f;
-        if (angle < -180) {
-            angle = 90;
-        } else if (angle < -90) {
-            angle = -90;
-        }
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        // if (angle < -180) {
+        //     angle = 90;
+        // } else if (angle < -90) {
+        //     angle = -90;
+        // }
 
         rigidBody.rotation = angle;
     }
 
     private float GravityBoost() {
-        if(!_Planet) {
+        if (!_Planet) {
             return 0;
         }
 
@@ -75,15 +82,15 @@ public class PlayerController : MonoBehaviour {
         return (GravityBoostConstant * size) / distance;
     }
 
-    private float GravityPull(float velocity, float theta) {
-        if(!_Planet) {
+    private float GravityPull() {
+        if (!_Planet) {
             return 0;
         }
 
         float distance = Vector2.Distance(_Planet.transform.position, transform.position);
         float size = _Planet.GetComponent<PlanetInterface>().GetSize();
 
-        return (((GravityPullConstant * size) / distance) * .5f * Time.fixedDeltaTime * Time.fixedDeltaTime) + ((velocity / Mathf.Sin(theta)) * Time.fixedDeltaTime);
+        return (GravityPullConstant * size) / distance;
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
@@ -93,8 +100,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnTriggerExit2D(Collider2D collision) {
+        Debug.Log("Name: " + collision.gameObject.name);
         if (collision.gameObject.name.Contains("Gravity")) {
             _Planet = null;
+            Debug.Log(_Planet);
         }
     }
 }
