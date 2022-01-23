@@ -28,6 +28,7 @@ public class ScoreTracker : MonoBehaviour
             scoreValue = (int) player.position.y;
             PlayerPrefs.SetInt("HighScore", scoreValue);
             HighScoreText.text = player.position.y.ToString("0");
+            PlayerPrefs.SetString("HighScore",(player.position.y.ToString("0")));
         }
         
     }
