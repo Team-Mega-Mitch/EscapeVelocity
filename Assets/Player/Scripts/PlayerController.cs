@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
     public float minThrust;
     public float maxThrust;
     public float GravityBoostConstant = 2f;
-    public float GravityPullConstant = 2f;
+    public float GravityPullConstant = 8f;
 
     private float thrust;
     private Vector3 distance;
@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     private Vector2 mousePos;
     private Camera camera;
     private GameObject _Planet;
+    private Animator animator;
 
 
     public float thrust_multiplier = .01f;
@@ -25,7 +26,8 @@ public class PlayerController : MonoBehaviour {
         camera = Camera.main;
 
         directionOfPlayerFromPlanet = Vector3.zero;
-        //Set Cursor to not be visible
+        animator = this.GetComponent<Animator>();
+
         Cursor.visible = false;
     }
 
@@ -39,6 +41,8 @@ public class PlayerController : MonoBehaviour {
         } else if (thrust != 0) {
             thrust = Mathf.Clamp(thrust - thrust_multiplier, 0, maxThrust);
         }
+
+        animator.SetFloat("speedMultiplier", Mathf.Clamp(thrust, 1, maxThrust));
 
         float velocity = (minThrust + thrust + GravityBoost());
         distance = new Vector3(0, 1, 0) * velocity * Time.fixedDeltaTime;
@@ -100,10 +104,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        Debug.Log("Name: " + collision.gameObject.name);
         if (collision.gameObject.name.Contains("Gravity")) {
             _Planet = null;
-            Debug.Log(_Planet);
         }
     }
 }
