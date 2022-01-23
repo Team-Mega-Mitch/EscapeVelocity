@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour {
     private Vector2 mousePos;
     private Camera camera;
 
+
+    public float thrust_multiplier = .01f;
+
     // Start is called before the first frame update
     void Start() {
         camera = Camera.main;
@@ -26,10 +29,10 @@ public class PlayerController : MonoBehaviour {
         mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) {
             if (thrust != maxThrust) {
-                thrust = Mathf.Clamp(thrust + .05f, 0, maxThrust);
+                thrust = Mathf.Clamp(thrust + thrust_multiplier, 0, maxThrust);
             }
         } else if (thrust != 0) {
-            thrust = Mathf.Clamp(thrust - .05f, 0, maxThrust);
+            thrust = Mathf.Clamp(thrust - thrust_multiplier, 0, maxThrust);
         }
     }
 
