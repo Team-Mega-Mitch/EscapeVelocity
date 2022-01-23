@@ -3,9 +3,15 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    public WinLose winLoseScript;
-    void OnCollisionEnter2D(Collision2D collision) 
-    {
-        winLoseScript.LoseLevel();
+    private WinLose _GameOver;
+
+    private void Start() {
+        _GameOver = GetComponent<WinLose>();
+    }
+
+    void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.gameObject.name.Contains("Planet")) {
+            _GameOver.LoseLevel();
+        }
     }
 }
