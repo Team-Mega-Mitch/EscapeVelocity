@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 5844603311087691694}
   - component: {fileID: 3925430797403971513}
   - component: {fileID: 5844603311087691695}
+  - component: {fileID: 3622461336282639749}
   m_Layer: 0
   m_Name: PlanetDead
   m_TagString: Untagged
@@ -168,8 +169,8 @@ MonoBehaviour:
   Speed: 0.5
   SurfaceColor:
     serializedVersion: 2
-    key0: {r: 0.6392157, g: 0.654902, b: 0.7607843, a: 1}
-    key1: {r: 0.29803923, g: 0.40784314, b: 0.52156866, a: 1}
+    key0: {r: 0.62762886, g: 0.6550876, b: 0.761, a: 1}
+    key1: {r: 0.22745098, g: 0.24705882, b: 0.36862746, a: 1}
     key2: {r: 0.22745098, g: 0.24705882, b: 0.36862746, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -177,7 +178,7 @@ MonoBehaviour:
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 32768
+    ctime1: 65535
     ctime2: 65535
     ctime3: 0
     ctime4: 0
@@ -193,11 +194,11 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 3
+    m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   CraterColor:
     serializedVersion: 2
-    key0: {r: 0.29803923, g: 0.40784314, b: 0.52156866, a: 1}
+    key0: {r: 0.3262857, g: 0.44649622, b: 0.571, a: 1}
     key1: {r: 0.22745098, g: 0.24705882, b: 0.36862746, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -205,8 +206,8 @@ MonoBehaviour:
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
+    ctime0: 1157
+    ctime1: 65150
     ctime2: 0
     ctime3: 0
     ctime4: 0
@@ -228,6 +229,114 @@ MonoBehaviour:
   CraterSeed: 1
   LightOrigin: {x: 0.3, y: 0.7}
   Pixels: 128
+--- !u!114 &3622461336282639749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5844603311087691693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193180115eacca24288d2389b4f7aa36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Speed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CloudCover:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  WaterFlow:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5844603311135532725
 GameObject:
   m_ObjectHideFlags: 0

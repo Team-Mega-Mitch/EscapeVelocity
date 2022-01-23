@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class RandomContinents : MonoBehaviour, RandomPlanetsInterface {
+public class RandomIcelands : MonoBehaviour, RandomPlanetsInterface {
     public AnimationCurve Rotation;
     public AnimationCurve Speed;
     public AnimationCurve CloudCover;
     public AnimationCurve WaterFlow;
 
-    private PlanetContinents _Planet;
+    private PlanetIcelands _Planet;
 
     private void Start() {
-        _Planet = GetComponent<PlanetContinents>();
+        _Planet = GetComponent<PlanetIcelands>();
 
         SetSeed();
         SetRotate();
@@ -42,27 +42,31 @@ public class RandomContinents : MonoBehaviour, RandomPlanetsInterface {
     public void SetColors() {
         ColorHSV hsv = new ColorHSV();
         hsv.h = Random.Range(0f, 1f);
-        hsv.s = Random.Range(0.9f, 1f);
-        hsv.v = Random.Range(0.5f, 1f);
+        hsv.s = Random.Range(0f, 0.1f);
+        hsv.v = Random.Range(0.8f, 1f);
 
-        Gradient generatedLandGradient = PlanetColors.GenerateColorGradient(hsv, 0.3f, -0.25f, -0.4f);
+        Gradient generatedLandGradient = PlanetColors.GenerateColorGradient(hsv, 0.17f, 0.1f, -0.3f);
         ColorHSV waterHSV = new ColorHSV(hsv.h, hsv.s, hsv.v);
-        waterHSV.h += .25f;
+        waterHSV.h += .1f;
         if(waterHSV.h > 1f){
             waterHSV.h -= 1f;
         }
-        waterHSV.v += 0.05f;
-        if(waterHSV.v > 1f){
-            waterHSV.v = 1f;
+        waterHSV.s += 0.45f;
+        if(waterHSV.s > 1f){
+            waterHSV.s = 1f;
         }
-        Gradient waterGradient = PlanetColors.GenerateColorGradient(new ColorHSV(waterHSV.h, waterHSV.s, waterHSV.v), 0.03f, -0.1f, -0.3f);
+        waterHSV.v -= 0.25f;
+        if(waterHSV.v < 0f){
+            waterHSV.v = 0;
+        }
+        Gradient waterGradient = PlanetColors.GenerateColorGradient(new ColorHSV(waterHSV.h, waterHSV.s, waterHSV.v), 0.05f, -0.2f, -0.4f);
         float cloudHue;
-        cloudHue = waterHSV.h + .11f;
+        cloudHue = hsv.h + .11f;
         if(cloudHue > 1f){
             cloudHue -= 1f;
         }
-        Gradient cloudGradient = PlanetColors.GenerateColorGradient(new ColorHSV(cloudHue, .05f, .9f), 0.05f, 0.4f, -0.45f);
-        Color atmosphere = Color.HSVToRGB(waterHSV.h, 1f, 1f);
+        Gradient cloudGradient = PlanetColors.GenerateColorGradient(new ColorHSV(cloudHue, .05f, .9f), 0.05f, 0.24f, 0f);
+        Color atmosphere = Color.HSVToRGB(waterHSV.h + 0.3f, 0.1f, 0.8f);
 
         _Planet.SetColors(generatedLandGradient, waterGradient, cloudGradient, atmosphere);
     }

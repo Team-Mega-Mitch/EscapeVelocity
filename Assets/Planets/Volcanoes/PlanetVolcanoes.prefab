@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 4273795969087695308}
   - component: {fileID: -3509486372097031787}
   - component: {fileID: 4273795969087695312}
+  - component: {fileID: 1098551240122319280}
   m_Layer: 0
   m_Name: PlanetVolcanoes
   m_TagString: Untagged
@@ -153,18 +154,18 @@ MonoBehaviour:
   Speed: 0.5
   LandColor:
     serializedVersion: 2
-    key0: {r: 0.56078434, g: 0.3019608, b: 0.34117648, a: 1}
-    key1: {r: 0.32156864, g: 0.2, b: 0.24705882, a: 1}
+    key0: {r: 0.6392157, g: 0.5326222, b: 0.24481963, a: 1}
+    key1: {r: 0.23921569, g: 0.16078432, b: 0.21176471, a: 1}
     key2: {r: 0.23921569, g: 0.16078432, b: 0.21176471, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0.23921569, g: 0.16078432, b: 0.21176471, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 32768
+    ctime1: 65535
     ctime2: 65535
-    ctime3: 0
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -178,7 +179,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 3
+    m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   CratersColor:
     serializedVersion: 2
@@ -211,16 +212,16 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   LavaColor:
     serializedVersion: 2
-    key0: {r: 1, g: 0.5372549, b: 0.2, a: 1}
-    key1: {r: 0.9019608, g: 0.27058825, b: 0.22352941, a: 1}
-    key2: {r: 0.6784314, g: 0.18431373, b: 0.27058825, a: 0}
+    key0: {r: 1, g: 0.6407437, b: 0.09411764, a: 1}
+    key1: {r: 0.6784314, g: 0.22216997, b: 0.18431373, a: 1}
+    key2: {r: 0.6784314, g: 0.3725836, b: 0.18431373, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 32768
+    ctime1: 65535
     ctime2: 65535
     ctime3: 0
     ctime4: 0
@@ -236,7 +237,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 3
+    m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   AtmosphereColor: {r: 0.54901963, g: 0.17254902, b: 0.101960786, a: 1}
   LandSeed: 1
@@ -246,6 +247,114 @@ MonoBehaviour:
   LightOrigin: {x: 0.3, y: 0.7}
   Pixels: 128
   LavaFlow: 0.4
+--- !u!114 &1098551240122319280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4273795969087695311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67921ab305fed0c4eaf6d47f64b8bf35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Speed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CloudCover:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  WaterFlow:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4273795969101719767
 GameObject:
   m_ObjectHideFlags: 0

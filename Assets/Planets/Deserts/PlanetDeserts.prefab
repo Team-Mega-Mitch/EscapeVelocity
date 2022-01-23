@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 1058628716350234853}
   - component: {fileID: 3100272740499942069}
   - component: {fileID: 1058628716350234873}
+  - component: {fileID: 884845329521789295}
   m_Layer: 0
   m_Name: PlanetDeserts
   m_TagString: Untagged
@@ -169,18 +170,18 @@ MonoBehaviour:
   SurfaceColor:
     serializedVersion: 2
     key0: {r: 0.9019608, g: 0.5882353, b: 0.32941177, a: 1}
-    key1: {r: 0.9098039, g: 0.42745098, b: 0.27450982, a: 1}
-    key2: {r: 0.7058824, g: 0.3019608, b: 0.2509804, a: 0}
-    key3: {r: 0.48235294, g: 0.23921569, b: 0.23921569, a: 0}
-    key4: {r: 0.3019608, g: 0.12941177, b: 0.12941177, a: 0}
+    key1: {r: 0.23529412, g: 0.05882353, b: 0.05882353, a: 1}
+    key2: {r: 0.23529412, g: 0.05882353, b: 0.05882353, a: 0}
+    key3: {r: 0.23529412, g: 0.05882353, b: 0.05882353, a: 0}
+    key4: {r: 0.23529412, g: 0.05882353, b: 0.05882353, a: 0}
     key5: {r: 0.23529412, g: 0.05882353, b: 0.05882353, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 11565
-    ctime2: 24672
-    ctime3: 37779
-    ctime4: 51464
+    ctime1: 64957
+    ctime2: 64957
+    ctime3: 64957
+    ctime4: 64957
     ctime5: 64957
     ctime6: 0
     ctime7: 0
@@ -193,12 +194,120 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 6
+    m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   AtmosphereColor: {r: 0.3882353, g: 0.22745098, b: 0.13725491, a: 1}
   SurfaceSeed: 1
   LightOrigin: {x: 0.3, y: 0.7}
   Pixels: 128
+--- !u!114 &884845329521789295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058628716350234854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ab910f5d9e7d44799f48a42ecf1710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Speed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CloudCover:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  WaterFlow:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1058628716368716286
 GameObject:
   m_ObjectHideFlags: 0
