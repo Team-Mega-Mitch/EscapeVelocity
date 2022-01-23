@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour {
     [Header("Chunking")]
+    public GameObject Follow;
     public bool PreviewChunkGrid = true;
     public Vector2Int ChunkGrid;
     [Range(10, 100)] public int ChunkSize;
@@ -11,6 +12,7 @@ public class Spawner : MonoBehaviour {
     [Range(10, 500)] public int Amount;
     [Range(3, 20)] public float Padding;
     [Range(1, 100)] public int Sampling;
+    [Range(10, 100)] public float SafeZone;
     public AnimationCurve SizeDistribution;
 
     [Header("Planets")]
@@ -100,6 +102,9 @@ public class Spawner : MonoBehaviour {
         _Chunks = new GameObject[ChunkGrid.y, ChunkGrid.x];
         int colOffset = ((ChunkGrid.x - 1) * ChunkSize) / 2;
 
+        GameObject safeZone = new GameObject("SafeZone", typeof(CircleCollider2D));
+        safeZone.GetComponent<CircleCollider2D>().radius = SafeZone;
+
         for (int row = 0; row < ChunkGrid.y; row++) {
             for (int col = 0; col < ChunkGrid.x; col++) {
                 Vector2 position = new Vector2((col * ChunkSize) - colOffset, row * ChunkSize);
@@ -111,6 +116,7 @@ public class Spawner : MonoBehaviour {
             }
         }
 
+        Destroy(safeZone);
     }
 
     private GameObject NewChunk(Vector2 position) {
@@ -217,6 +223,8 @@ public class Spawner : MonoBehaviour {
     }
 
     private void Update() {
+        transform.position = Follow.transform.position;
+
         Vector2Int chunkDirection = GetNewChunkDirection();
 
         if (chunkDirection != Vector2Int.zero) {

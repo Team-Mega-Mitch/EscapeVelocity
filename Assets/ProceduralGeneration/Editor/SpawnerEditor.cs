@@ -14,6 +14,7 @@ public class SpawnerEditor : Editor {
 
         if (Spawner.PreviewChunkGrid) {
             GenerateGrid();
+            GenerateSafeZone();
         }
     }
 
@@ -30,5 +31,11 @@ public class SpawnerEditor : Editor {
                 Handles.RectangleHandleCap(0, position, Quaternion.identity, Spawner.ChunkSize / 2, EventType.Repaint);
             }
         }
+    }
+
+    private void GenerateSafeZone() {
+        int centerChunk = (Spawner.ChunkGrid.x - 1) / 2;
+
+        Handles.CircleHandleCap(0, Spawner.transform.position, Quaternion.identity, Spawner.SafeZone, EventType.Repaint);
     }
 }
