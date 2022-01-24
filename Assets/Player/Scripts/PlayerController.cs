@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioController>().PlayMusic();
+        // GameObject.FindGameObjectWithTag("Music").GetComponent<AudioController>().PlayMusic();
 
         float velocity = (minThrust + thrust + GravityBoost());
         Vector3 distance = new Vector3(0, 1, 0) * (minThrust + thrust + GravityBoost()) * Time.fixedDeltaTime;
