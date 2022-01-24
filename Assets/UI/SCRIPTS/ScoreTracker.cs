@@ -10,7 +10,9 @@ public class ScoreTracker : MonoBehaviour
     
     void Update()
     {
-        scoreText.text = player.position.y.ToString("0");
+        if(player != null) {
+            scoreText.text = player.position.y.ToString("0");
+        }
     }
 
 }

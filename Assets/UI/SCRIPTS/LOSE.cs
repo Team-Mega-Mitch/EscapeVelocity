@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class LOSE : MonoBehaviour
 {
+    public void Start() {
+        Cursor.visible = true;
+    }
+
     public void LoadMenu()
     {
         SceneManager.LoadScene("Menu");
